@@ -1,6 +1,6 @@
-## Advanced Survival Plugin
+# Advanced Survival Plugin
 
-## Features :
+## Features
 - Money system 
 - Market item system
 - Villager market system
@@ -8,13 +8,13 @@
 - home system
 - utils commands
 
-## utils commands:
+## utils commands
 - /craft 
 - /ec
 - /slime
 
 
 
-custom items list:
+## custom items list
 - bedrock breaker
 - 
