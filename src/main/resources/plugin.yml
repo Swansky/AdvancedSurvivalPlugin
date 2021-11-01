@@ -1,0 +1,6 @@
+name: AdvancedSurvivalPlugin
+version: '${project.version}'
+main: fr.swansky.advancedsurvivalplugin.AdvancedSurvivalPlugin
+api-version: 1.17
+authors: [ Swansky ]
+description: Plugin for Swansky server
