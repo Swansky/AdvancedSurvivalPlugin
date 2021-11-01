@@ -1,12 +1,12 @@
 package fr.swansky.advancedsurvivalplugin.customItem.models;
 
+import fr.swansky.advancedsurvivalplugin.AdvancedSurvivalPlugin;
 import org.bukkit.Material;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.HashSet;
-import java.util.Set;
 
 public abstract class CustomItem extends ItemStack {
     private final String customItemID;
@@ -23,6 +23,8 @@ public abstract class CustomItem extends ItemStack {
         super(stack);
         this.customItemID = customItemID;
         this.customName = customName;
+        initMetaData();
+        initContainerID();
     }
 
     /**
@@ -41,6 +43,7 @@ public abstract class CustomItem extends ItemStack {
         this.customItemID = customItemID;
         this.customName = customName;
         initMetaData();
+        initContainerID();
     }
 
     /**
@@ -60,13 +63,23 @@ public abstract class CustomItem extends ItemStack {
         this.customItemID = customItemID;
         this.customName = customName;
         initMetaData();
+        initContainerID();
+    }
+
+    private void initContainerID() {
+
+        ItemMeta itemMeta = this.getItemMeta();
+        itemMeta.getPersistentDataContainer().set(AdvancedSurvivalPlugin.NAMESPACE_KEY, PersistentDataType.STRING, this.customItemID);
+        setItemMeta(itemMeta);
     }
 
     public abstract void initMetaData();
-    public abstract void rightClick(PlayerInteractEvent event);
-    public abstract void leftClick(PlayerInteractEvent event);
-    public abstract void middleClick(PlayerInteractEvent event);
 
+    public abstract void rightClick(PlayerInteractEvent event);
+
+    public abstract void leftClick(PlayerInteractEvent event);
+
+    public abstract void middleClick(PlayerInteractEvent event);
 
 
     public String getCustomItemID() {

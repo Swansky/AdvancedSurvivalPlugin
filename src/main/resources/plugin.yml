@@ -4,3 +4,17 @@ main: fr.swansky.advancedsurvivalplugin.AdvancedSurvivalPlugin
 api-version: 1.17
 authors: [ Swansky ]
 description: Plugin for Swansky server
+commands:
+  customItem:
+    description: give custom item
+    usage: /customItem <type>
+  addMarket:
+    description: addMarket
+    usage: /addMarket <unique id> <market title>
+  addVillagerMarket:
+    description:  add villager market
+    usage: /addVillagerMarket <market id>
+  deleteMarket:
+    description: delete market
+    usage: /deleteMarket <market id>
+
