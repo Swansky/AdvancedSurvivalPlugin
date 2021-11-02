@@ -1,8 +1,9 @@
 package fr.swansky.advancedsurvivalplugin.market.commands;
 
 import fr.swansky.advancedsurvivalplugin.Rank;
-import fr.swansky.advancedsurvivalplugin.market.MarketManager;
+import fr.swansky.advancedsurvivalplugin.market.MarketController;
 import fr.swansky.advancedsurvivalplugin.market.models.Market;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -10,10 +11,10 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 public class AddMarketCommand implements CommandExecutor {
-    private final MarketManager marketManager;
+    private final MarketController marketController;
 
-    public AddMarketCommand(MarketManager marketManager) {
-        this.marketManager = marketManager;
+    public AddMarketCommand(MarketController marketController) {
+        this.marketController = marketController;
     }
 
     /**
@@ -36,13 +37,25 @@ public class AddMarketCommand implements CommandExecutor {
                 player.sendMessage(Rank.NO_PERMISSION_MESSAGE);
                 return true;
             }
-            if (args.length > 1) {
+            if (args.length > 2) {
                 String id = args[0];
+                String row = args[1];
                 StringBuilder marketTitle = new StringBuilder();
-                for (int i = 1; i < args.length; i++) {
+                for (int i = 2; i < args.length; i++) {
                     marketTitle.append(args[i]);
                 }
-                Market market = new Market(id,marketTitle.toString(),3);
+                Market market = new Market(id,marketTitle.toString(),Integer.parseInt(row));
+                try {
+                    marketController.add(market);
+                    marketController.save();
+                    player.sendMessage(ChatColor.GRAY+" Le market "+ChatColor.GREEN+marketTitle.toString()+
+                            ChatColor.GRAY+" avec l'id " +
+                            ChatColor.GREEN+id+
+                            ChatColor.GRAY+" a été crée.");
+                } catch (Exception e) {
+                    player.sendMessage(ChatColor.RED+"Impossible d'ajouter ce market.");
+                }
+
             }
             //TODO add code for add market command
         }

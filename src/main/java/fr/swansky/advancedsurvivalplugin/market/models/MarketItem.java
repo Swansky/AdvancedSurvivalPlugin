@@ -4,7 +4,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 
-public class MarketItem implements Clickable, TableElement {
+public class MarketItem implements Clickable {
     private final String identificationName;
     private final String displayName;
     private final ItemStack icon;
@@ -13,6 +13,8 @@ public class MarketItem implements Clickable, TableElement {
     private final Double purchasePrice;
     private final int rowPosition;
     private final int columnPosition;
+    private boolean sellable = false;
+    private boolean purchasable = false;
 
 
     public MarketItem(String identificationName, String displayName, ItemStack itemForMarket, Double sellPrice, Double purchasePrice, int rowPosition, int columnPosition) {
@@ -89,4 +91,19 @@ public class MarketItem implements Clickable, TableElement {
         return columnPosition;
     }
 
+    public boolean isSellable() {
+        return sellable;
+    }
+
+    public void setSellable(boolean sellable) {
+        this.sellable = sellable;
+    }
+
+    public boolean isPurchasable() {
+        return purchasable;
+    }
+
+    public void setPurchasable(boolean purchasable) {
+        this.purchasable = purchasable;
+    }
 }

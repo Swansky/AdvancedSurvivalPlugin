@@ -4,10 +4,8 @@ import fr.swansky.advancedsurvivalplugin.customItem.CustomItemManager;
 import fr.swansky.advancedsurvivalplugin.customItem.commands.GiveCustomItemCommand;
 import fr.swansky.advancedsurvivalplugin.customItem.listeners.ClickCustomItemListener;
 import fr.swansky.advancedsurvivalplugin.data.YmlManager;
-import fr.swansky.advancedsurvivalplugin.market.MarketManager;
-import fr.swansky.advancedsurvivalplugin.market.commands.AddMarketCommand;
-import fr.swansky.advancedsurvivalplugin.market.commands.AddVillagerMarketCommand;
-import fr.swansky.advancedsurvivalplugin.market.commands.DeleteMarketCommand;
+import fr.swansky.advancedsurvivalplugin.market.MarketController;
+import fr.swansky.advancedsurvivalplugin.market.commands.*;
 import fr.swansky.advancedsurvivalplugin.market.listeners.InventoryClickListener;
 import org.bukkit.NamespacedKey;
 import org.bukkit.plugin.PluginManager;
@@ -18,7 +16,7 @@ public final class AdvancedSurvivalPlugin extends JavaPlugin {
     public static NamespacedKey NAMESPACE_KEY;
     private YmlManager ymlManager;
     private CustomItemManager customItemManager;
-    private MarketManager marketManager;
+    private MarketController marketController;
 
     @Override
     public void onLoad() {
@@ -30,7 +28,7 @@ public final class AdvancedSurvivalPlugin extends JavaPlugin {
     public void onEnable() {
         this.ymlManager = new YmlManager();
         this.customItemManager = new CustomItemManager();
-        this.marketManager = new MarketManager();
+        this.marketController = new MarketController();
         registerEvents();
         registerCommands();
 
@@ -47,9 +45,11 @@ public final class AdvancedSurvivalPlugin extends JavaPlugin {
         getCommand("customItem").setExecutor(new GiveCustomItemCommand());
 
         // Markets
-        getCommand("addMarket").setExecutor(new AddMarketCommand(marketManager));
+        getCommand("addMarket").setExecutor(new AddMarketCommand(marketController));
         getCommand("addVillagerMarket").setExecutor(new AddVillagerMarketCommand());
         getCommand("deleteMarket").setExecutor(new DeleteMarketCommand());
+        getCommand("marketList").setExecutor(new MarketListCommand(marketController));
+        getCommand("addMarketItem").setExecutor(new AddMarketItemCommand(marketController));
 
       /*  // Economy system
         getCommand("giveMoney").setExecutor(new GiveMoneyCommand());

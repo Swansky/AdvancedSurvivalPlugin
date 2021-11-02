@@ -1,8 +1,8 @@
 package fr.swansky.advancedsurvivalplugin.data;
 
 public interface Controller<T> {
-    void save(T t);
-    void add(T t);
+    void save();
+    void add(T t) throws Exception;
     void delete(T t);
     void load();
 }

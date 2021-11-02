@@ -20,13 +20,13 @@ public class MarketYML extends Yml<Market> {
     @Override
     public List<Market> read() {
         List<Market> markets = new ArrayList<>();
-        ConfigurationSection marketsSection = config.createSection("markets");
+        ConfigurationSection marketsSection = config.getConfigurationSection("markets");
         for (String marketID : marketsSection.getKeys(false)) {
             ConfigurationSection marketSection = marketsSection.getConfigurationSection(marketID);
             String marketTitle = marketSection.getString("title");
             int row = marketSection.getInt("row");
             Market market = new Market(marketID, marketTitle, row);
-
+            System.out.println("new market");
             ConfigurationSection marketItemsSection = marketSection.getConfigurationSection("marketItems");
             for (String marketItemKey : marketItemsSection.getKeys(false)) {
                 ConfigurationSection marketItemSection = marketItemsSection.getConfigurationSection(marketItemKey);
@@ -38,10 +38,9 @@ public class MarketYML extends Yml<Market> {
                 int rowPosition = marketItemSection.getInt("row");
                 int columPosition = marketItemSection.getInt("column");
                 MarketItem marketItem = new MarketItem(marketItemKey, displayName, icon, itemForMarket, sellPrice, purchasePrice, rowPosition,columPosition);
-
-                market.addClickableItem(marketItem,rowPosition,columPosition);
+                market.addClickableItem(marketItem);
             }
-
+        markets.add(market);
         }
 
         return markets;

@@ -16,18 +16,18 @@ import java.util.Map;
 public class CustomInventory implements InventoryHolder {
 
     private final Inventory inventory;
-    private final int row, column = 8;
+    private final int row, column = 9;
     private final Map<Integer, Clickable> clickableMap = new HashMap<>();
     private final String inventoryTitle;
     public CustomInventory(String titleInventory, int row) {
-        this.inventory = Bukkit.createInventory(this, row * 8, Component.text(titleInventory));
+        this.inventory = Bukkit.createInventory(this, row * column, Component.text(titleInventory));
         this.row = row;
 
         this.inventoryTitle = titleInventory;
     }
 
     public CustomInventory(int row) {
-        this.inventory = Bukkit.createInventory(this, row * 8);
+        this.inventory = Bukkit.createInventory(this, row * column);
         this.row = row;
         this.inventoryTitle = "custom Inventory";
     }
@@ -45,9 +45,9 @@ public class CustomInventory implements InventoryHolder {
         return this;
     }
 
-    public CustomInventory addClickableItem(Clickable clickable, int atRow, int atColumn) {
+    public CustomInventory addClickableItem(Clickable clickable) {
 
-        int slot = (((atRow - 1) * (column)) - 1) + atColumn;
+        int slot = (((clickable.getRowPosition() - 1) * (column)) - 1) + clickable.getColumnPosition();
         clickableMap.put(slot, clickable);
         this.inventory.setItem(slot, clickable.getIcon());
         return this;

@@ -1,6 +1,7 @@
 package fr.swansky.advancedsurvivalplugin.market;
 
 import fr.swansky.advancedsurvivalplugin.data.Controller;
+import fr.swansky.advancedsurvivalplugin.market.exceptions.MarketException;
 import fr.swansky.advancedsurvivalplugin.market.models.Market;
 
 import java.util.HashMap;
@@ -8,12 +9,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public class MarketManager implements Controller<Market> {
+public class MarketController implements Controller<Market> {
     private final MarketYML marketYML;
     private final Map<String, Market> marketMap = new HashMap<>();
 
-    public MarketManager() {
+    public MarketController() {
         this.marketYML = new MarketYML();
+        load();
     }
 
     public Optional<Market> getMarketByIdentificationName(String id) {
@@ -22,7 +24,7 @@ public class MarketManager implements Controller<Market> {
 
 
     @Override
-    public void save(Market market) {
+    public void save() {
         marketYML.clean();
         for (Market marketMap : this.marketMap.values()) {
             marketYML.write(marketMap);
@@ -31,7 +33,10 @@ public class MarketManager implements Controller<Market> {
     }
 
     @Override
-    public void add(Market market) {
+    public void add(Market market) throws Exception {
+        if (this.marketMap.containsKey(market.getMarketID())) {
+            throw new MarketException("Market With ID '" + market.getMarketID() + "' already exist ! ");
+        }
         this.marketMap.put(market.getMarketID(), market);
     }
 
@@ -46,6 +51,14 @@ public class MarketManager implements Controller<Market> {
         for (Market market : read) {
             marketMap.put(market.getMarketID(), market);
         }
+    }
+
+    public boolean existByID(String id) {
+        return this.marketMap.containsKey(id);
+    }
+
+    public Market getMarketByID(String id) {
+        return this.marketMap.get(id);
     }
 
     public Map<String, Market> getMarketMap() {
