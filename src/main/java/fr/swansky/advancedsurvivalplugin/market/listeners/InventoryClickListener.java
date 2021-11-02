@@ -14,6 +14,7 @@ public class InventoryClickListener implements Listener {
     public void onClickInventory(InventoryClickEvent event) {
         //TODO add code for Inventory click event listener
         if (event.getView().getTopInventory().getHolder() instanceof CustomInventory) {
+            event.setCancelled(true);
             if (event.getCurrentItem() != null) {
                 ItemStack itemStack = event.getCurrentItem();
                 if (event.getWhoClicked() instanceof Player) {

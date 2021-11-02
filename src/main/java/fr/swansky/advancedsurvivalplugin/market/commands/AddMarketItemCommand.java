@@ -42,17 +42,17 @@ public class AddMarketItemCommand implements CommandExecutor {
                 if (Material.getMaterial(args[1]) != null) {
                     Material material = Material.getMaterial(args[1]);
                     if (IsBoolean(args[2])) {
-                        Boolean sellable = Boolean.getBoolean(args[2]);
+                        boolean sellable = Boolean.parseBoolean(args[2]);
                         if (IsDouble(args[3])) {
                             Double sellPrice = Double.parseDouble(args[3]);
                             if (IsBoolean(args[4])) {
-                                Boolean purchasable = Boolean.getBoolean(args[4]);
+                                boolean purchasable = Boolean.parseBoolean(args[4]);
                                 if (IsDouble(args[5])) {
                                     Double purchasePrice = Double.parseDouble(args[5]);
                                     if (marketController.existByID(args[6])) {
                                         Market marketByID = marketController.getMarketByID(args[6]);
                                         ItemStack itemInUse = player.getInventory().getItemInMainHand();
-                                        if (itemInUse != null) {
+                                        if (itemInUse.getType() != Material.AIR) {
                                             if (IsInteger(args[7]) && IsInteger(args[8])) {
                                                 int row = Integer.parseInt(args[7]);
                                                 int column = Integer.parseInt(args[8]);
@@ -60,7 +60,11 @@ public class AddMarketItemCommand implements CommandExecutor {
                                                 for (int i = 9; i < args.length; i++) {
                                                     title.append(args[i]);
                                                 }
+                                                itemInUse = itemInUse.clone();
+                                                itemInUse.setAmount(1);
                                                 MarketItem marketItem = new MarketItem(id, title.toString(), new ItemStack(material), itemInUse, sellPrice, purchasePrice, row, column);
+                                                marketItem.setSellable(sellable);
+                                                marketItem.setPurchasable(purchasable);
                                                 marketByID.addClickableItem(marketItem);
                                                 marketController.save();
                                             } else {

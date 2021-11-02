@@ -23,4 +23,6 @@ commands:
   addMarketItem:
     description: add item to market
     usage: /addMarketItem <ID> <MATERIAL icon> <sellable> <sell price> <purchasable>  <purchase price>  <Display name>
-
+  openMarket:
+    description: Open market with market id
+    usage: /openMarket <marketID>

@@ -21,12 +21,15 @@ public class MarketYML extends Yml<Market> {
     public List<Market> read() {
         List<Market> markets = new ArrayList<>();
         ConfigurationSection marketsSection = config.getConfigurationSection("markets");
+        if (marketsSection == null)
+            return markets;
         for (String marketID : marketsSection.getKeys(false)) {
             ConfigurationSection marketSection = marketsSection.getConfigurationSection(marketID);
+            if(marketSection == null) return markets;
             String marketTitle = marketSection.getString("title");
             int row = marketSection.getInt("row");
             Market market = new Market(marketID, marketTitle, row);
-            System.out.println("new market");
+
             ConfigurationSection marketItemsSection = marketSection.getConfigurationSection("marketItems");
             for (String marketItemKey : marketItemsSection.getKeys(false)) {
                 ConfigurationSection marketItemSection = marketItemsSection.getConfigurationSection(marketItemKey);
@@ -37,10 +40,14 @@ public class MarketYML extends Yml<Market> {
                 Double purchasePrice = marketItemSection.getDouble("purchasePrice");
                 int rowPosition = marketItemSection.getInt("row");
                 int columPosition = marketItemSection.getInt("column");
-                MarketItem marketItem = new MarketItem(marketItemKey, displayName, icon, itemForMarket, sellPrice, purchasePrice, rowPosition,columPosition);
+                boolean sellable = marketItemSection.getBoolean("sellable");
+                boolean purchasable = marketItemSection.getBoolean("purchasable");
+                MarketItem marketItem = new MarketItem(marketItemKey, displayName, icon, itemForMarket, sellPrice, purchasePrice, rowPosition, columPosition);
+                marketItem.setPurchasable(purchasable);
+                marketItem.setSellable(sellable);
                 market.addClickableItem(marketItem);
             }
-        markets.add(market);
+            markets.add(market);
         }
 
         return markets;
@@ -60,8 +67,11 @@ public class MarketYML extends Yml<Market> {
             marketItemSection.set("icon", marketItem.getIcon());
             marketItemSection.set("sellPrice", marketItem.getSellPrice());
             marketItemSection.set("purchasePrice", marketItem.getPurchasePrice());
-            marketItemSection.set("row",marketItem.getRowPosition());
-            marketItemSection.set("column",marketItem.getColumnPosition());
+            marketItemSection.set("row", marketItem.getRowPosition());
+            marketItemSection.set("column", marketItem.getColumnPosition());
+            marketItemSection.set("sellable", marketItem.isSellable());
+            marketItemSection.set("purchasable", marketItem.isPurchasable());
+
         }
         save();
     }

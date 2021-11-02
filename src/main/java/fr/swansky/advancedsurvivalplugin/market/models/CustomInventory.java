@@ -46,7 +46,7 @@ public class CustomInventory implements InventoryHolder {
     }
 
     public CustomInventory addClickableItem(Clickable clickable) {
-
+        clickable.initView();
         int slot = (((clickable.getRowPosition() - 1) * (column)) - 1) + clickable.getColumnPosition();
         clickableMap.put(slot, clickable);
         this.inventory.setItem(slot, clickable.getIcon());

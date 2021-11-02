@@ -58,7 +58,7 @@ public class BedrockBreakerItem extends CustomItem {
                     event.getPlayer().playSound(
                             event.getPlayer().getLocation(),
                             Sound.ENTITY_ITEM_BREAK, 1F, 1F);
-                    event.getPlayer().getInventory().remove(event.getItem());
+                    event.getPlayer().getInventory().removeItemAnySlot(event.getItem());
                 } else {
 
                     itemMeta.setDamage(itemMeta.getDamage() + 10);

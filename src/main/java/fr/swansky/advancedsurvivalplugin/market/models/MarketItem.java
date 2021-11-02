@@ -1,8 +1,14 @@
 package fr.swansky.advancedsurvivalplugin.market.models;
 
+import net.kyori.adventure.text.Component;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MarketItem implements Clickable {
     private final String identificationName;
@@ -15,7 +21,6 @@ public class MarketItem implements Clickable {
     private final int columnPosition;
     private boolean sellable = false;
     private boolean purchasable = false;
-
 
     public MarketItem(String identificationName, String displayName, ItemStack itemForMarket, Double sellPrice, Double purchasePrice, int rowPosition, int columnPosition) {
         this.identificationName = identificationName;
@@ -50,12 +55,48 @@ public class MarketItem implements Clickable {
         this.columnPosition = columnPosition;
     }
 
+
+    @Override
+    public void click(Player player, ClickType clickType) {
+        if (clickType.isLeftClick()) {
+            player.sendMessage("Vendre");
+        } else if (clickType.isRightClick()) {
+            player.getInventory().addItem(itemForMarket);
+            player.sendMessage("Acheter");
+        }
+    }
+
     public String getDisplayName() {
         return displayName;
     }
 
     public ItemStack getIcon() {
         return icon;
+    }
+
+    @Override
+    public void initView() {
+        ItemMeta itemMeta = this.icon.getItemMeta();
+        itemMeta.displayName(Component.text(this.displayName));
+        List<Component> lores = new ArrayList<>();
+
+        if (sellable) {
+            lores.add(Component.text(ChatColor.GRAY + "Vendre pour: " + ChatColor.RED + sellPrice));
+            lores.add(Component.text(ChatColor.GRAY + " count: " + ChatColor.RED + 1 + "x"));
+        }
+        if (purchasable) {
+            lores.add(Component.text(ChatColor.GRAY + "Acheter pour: " + ChatColor.RED + sellPrice));
+            lores.add(Component.text(ChatColor.GRAY + " count: " + ChatColor.RED + 1 + "x"));
+        }
+        //Second check to add at end only
+        if (sellable) {
+            lores.add(Component.text(ChatColor.GREEN + "CLICK GAUCHE POUR VENDRE"));
+        }
+        if (purchasable) {
+            lores.add(Component.text(ChatColor.YELLOW + "CLICK DROIT POUR ACHETER"));
+        }
+        itemMeta.lore(lores);
+        this.icon.setItemMeta(itemMeta);
     }
 
     public ItemStack getItemForMarket() {
@@ -74,14 +115,6 @@ public class MarketItem implements Clickable {
         return purchasePrice;
     }
 
-    @Override
-    public void click(Player player, ClickType clickType) {
-        if (clickType.isLeftClick()) {
-
-        } else if (clickType.isRightClick()) {
-
-        }
-    }
 
     public int getRowPosition() {
         return rowPosition;
