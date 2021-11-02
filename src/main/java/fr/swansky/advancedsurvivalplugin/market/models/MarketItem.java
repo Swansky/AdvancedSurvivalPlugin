@@ -4,7 +4,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 
-public class MarketItem implements Clickable {
+public class MarketItem implements Clickable, TableElement {
     private final String identificationName;
     private final String displayName;
     private final ItemStack icon;
@@ -88,4 +88,5 @@ public class MarketItem implements Clickable {
     public int getColumnPosition() {
         return columnPosition;
     }
+
 }
