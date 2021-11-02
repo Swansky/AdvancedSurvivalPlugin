@@ -3,19 +3,31 @@ package fr.swansky.advancedsurvivalplugin.economy;
 import fr.swansky.advancedsurvivalplugin.data.Manager;
 import fr.swansky.advancedsurvivalplugin.economy.exceptions.WalletCreationException;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 public class WalletManager implements Manager<Wallet> {
     private final WalletYML walletYML;
     private final Map<UUID, Wallet> walletMap = new HashMap<>();
 
-    public WalletManager(WalletYML walletYML) {
-        this.walletYML = walletYML;
+    public WalletManager() {
+        this.walletYML = new WalletYML();
         load();
     }
 
-    public Optional<Wallet> findWalletByPlayerUUID(UUID playerUUID) {
-        return Optional.ofNullable(this.walletMap.get(playerUUID));
+    public Wallet findWalletByPlayerUUID(UUID playerUUID) {
+        if (this.walletMap.get(playerUUID) != null) {
+            return this.walletMap.get(playerUUID);
+        }
+        Wallet wallet = new Wallet(playerUUID);
+        try {
+            add(wallet);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return wallet;
     }
 
     @Override

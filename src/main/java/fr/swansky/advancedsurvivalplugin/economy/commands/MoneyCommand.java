@@ -1,6 +1,5 @@
 package fr.swansky.advancedsurvivalplugin.economy.commands;
 
-import fr.swansky.advancedsurvivalplugin.Rank;
 import fr.swansky.advancedsurvivalplugin.economy.Wallet;
 import fr.swansky.advancedsurvivalplugin.economy.WalletManager;
 import org.bukkit.Bukkit;
@@ -11,10 +10,14 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class ResetWalletCommand implements CommandExecutor {
+import java.math.BigDecimal;
+
+import static fr.swansky.advancedsurvivalplugin.Constants.MONEY_UNITY;
+
+public class MoneyCommand implements CommandExecutor {
     private final WalletManager walletManager;
 
-    public ResetWalletCommand(WalletManager walletManager) {
+    public MoneyCommand(WalletManager walletManager) {
         this.walletManager = walletManager;
     }
 
@@ -32,29 +35,21 @@ public class ResetWalletCommand implements CommandExecutor {
      */
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-
         if (sender instanceof Player) {
             Player player = (Player) sender;
-            if (!player.hasPermission(Rank.ADMIN.getPermission())) {
-                player.sendMessage(Rank.NO_PERMISSION_MESSAGE);
-                return true;
-            }
-            if (args.length == 0) {
-                Wallet walletByPlayerUUID = this.walletManager.findWalletByPlayerUUID(player.getUniqueId());
-                walletByPlayerUUID.clear();
-                walletManager.save();
-
-            } else if (args.length > 0) {
+            if (args.length > 1) {
                 if (Bukkit.getPlayer(args[0]) != null) {
-                    Player playerToDeposit = Bukkit.getPlayer(args[0]);
-                    Wallet playerToGive = walletManager.findWalletByPlayerUUID(playerToDeposit.getUniqueId());
-                    playerToGive.clear();
-                    walletManager.save();
+                    Player ohterPlayer = Bukkit.getPlayer(args[0]);
+                    Wallet otherPlayerWallet = walletManager.findWalletByPlayerUUID(ohterPlayer.getUniqueId());
+                    BigDecimal balance = otherPlayerWallet.getBalance();
+                    player.sendMessage(ChatColor.GRAY + "Il a : " + ChatColor.RED + balance.toString() + MONEY_UNITY);
                 } else {
                     player.sendMessage(ChatColor.GRAY + "Ce joueur n'existe pas ou n'est pas connecté");
                 }
             } else {
-                player.sendMessage(ChatColor.GRAY + "Utilisation de la commande /giveMoney <Joueur> <montant>");
+                Wallet walletByPlayerUUID = this.walletManager.findWalletByPlayerUUID(player.getUniqueId());
+                BigDecimal balance = walletByPlayerUUID.getBalance();
+                player.sendMessage(ChatColor.GRAY + "Vous avez: " + ChatColor.RED + balance.toString() + " " + ChatColor.BOLD + MONEY_UNITY);
             }
         }
         return true;

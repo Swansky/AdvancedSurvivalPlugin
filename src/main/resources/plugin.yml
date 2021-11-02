@@ -26,3 +26,19 @@ commands:
   openMarket:
     description: Open market with market id
     usage: /openMarket <marketID>
+  Money:
+    description: show your balance
+    usage: /money <Player>
+  giveMoney:
+    description: give money to other player
+    usage: /giveMoney
+    permission: advancedsurvival.admin
+  resetMoney:
+    description: reset wallet
+    usage: /resetMoney
+    permission: advancedsurvival.admin
+  transferMoney:
+    description: transfer money to other player
+    usage: /transferMoney <player> <amount>
+
+

@@ -19,6 +19,7 @@ public class WalletYML extends Yml<Wallet> {
     public List<Wallet> read() {
         final List<Wallet> wallets = new ArrayList<>();
         ConfigurationSection walletsSection = config.getConfigurationSection("wallets");
+        if(walletsSection == null) return wallets;
         UUID playerUUID;
         BigDecimal balance;
         Wallet wallet;

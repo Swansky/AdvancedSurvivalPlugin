@@ -1,11 +1,18 @@
 package fr.swansky.advancedsurvivalplugin.economy.commands;
 
+import fr.swansky.advancedsurvivalplugin.economy.WalletManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
 public class TransferMoneyCommand implements CommandExecutor {
+    private final WalletManager walletManager;
+
+    public TransferMoneyCommand(WalletManager walletManager) {
+        this.walletManager = walletManager;
+    }
+
     /**
      * Executes the given command, returning its success.
      * <br>

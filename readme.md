@@ -17,4 +17,4 @@
 
 ## custom items list
 - bedrock breaker
-- 
+- Golden lasso

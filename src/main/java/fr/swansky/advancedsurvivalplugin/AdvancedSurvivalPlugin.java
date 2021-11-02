@@ -4,6 +4,11 @@ import fr.swansky.advancedsurvivalplugin.customItem.CustomItemManager;
 import fr.swansky.advancedsurvivalplugin.customItem.commands.GiveCustomItemCommand;
 import fr.swansky.advancedsurvivalplugin.customItem.listeners.ClickCustomItemListener;
 import fr.swansky.advancedsurvivalplugin.data.YmlManager;
+import fr.swansky.advancedsurvivalplugin.economy.WalletManager;
+import fr.swansky.advancedsurvivalplugin.economy.commands.GiveMoneyCommand;
+import fr.swansky.advancedsurvivalplugin.economy.commands.MoneyCommand;
+import fr.swansky.advancedsurvivalplugin.economy.commands.ResetWalletCommand;
+import fr.swansky.advancedsurvivalplugin.economy.commands.TransferMoneyCommand;
 import fr.swansky.advancedsurvivalplugin.market.MarketManager;
 import fr.swansky.advancedsurvivalplugin.market.commands.*;
 import fr.swansky.advancedsurvivalplugin.market.listeners.InventoryClickListener;
@@ -17,7 +22,7 @@ public final class AdvancedSurvivalPlugin extends JavaPlugin {
     private YmlManager ymlManager;
     private CustomItemManager customItemManager;
     private MarketManager marketController;
-
+    private WalletManager walletManager;
     @Override
     public void onLoad() {
         INSTANCE = this;
@@ -29,6 +34,7 @@ public final class AdvancedSurvivalPlugin extends JavaPlugin {
         this.ymlManager = new YmlManager();
         this.customItemManager = new CustomItemManager();
         this.marketController = new MarketManager();
+        this.walletManager = new WalletManager();
         registerEvents();
         registerCommands();
 
@@ -52,10 +58,12 @@ public final class AdvancedSurvivalPlugin extends JavaPlugin {
         getCommand("addMarketItem").setExecutor(new AddMarketItemCommand(marketController));
         getCommand("openMarket").setExecutor(new OpenMarketCommand(marketController));
 
-      /*  // Economy system
-        getCommand("giveMoney").setExecutor(new GiveMoneyCommand());
-        getCommand("resetMoney").setExecutor(new ResetWalletCommand());
-        getCommand("transferMoney").setExecutor(new TransferMoneyCommand());
+        // Economy system
+        getCommand("giveMoney").setExecutor(new GiveMoneyCommand(walletManager));
+        getCommand("resetMoney").setExecutor(new ResetWalletCommand(walletManager));
+        getCommand("transferMoney").setExecutor(new TransferMoneyCommand(walletManager));
+        getCommand("money").setExecutor(new MoneyCommand(walletManager));
+      /*
 
         // Homes
         getCommand("delHome").setExecutor(new DeleteHomeCommand());

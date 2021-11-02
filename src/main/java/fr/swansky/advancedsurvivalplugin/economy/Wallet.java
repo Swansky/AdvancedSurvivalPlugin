@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public class Wallet {
     private final UUID playerUUID;
-    private final BigDecimal balance;
+    private BigDecimal balance;
 
     public Wallet(UUID playerUUID) {
         this.playerUUID = playerUUID;
@@ -27,12 +27,20 @@ public class Wallet {
         return balance;
     }
 
-    public void withdraw(Long amount) throws WalletWithdrawException {
-        //TODO add logic to withdraw
+    public void withdraw(Double amount) throws WalletWithdrawException {
+        BigDecimal bigDecimal = new BigDecimal(amount);
+        if (balance.subtract(bigDecimal).compareTo(BigDecimal.ZERO) >= 0) {
+            this.balance = balance.subtract(bigDecimal);
+        } else {
+            throw new WalletWithdrawException("");
+        }
     }
 
-    public void deposit(Long amount)
-    {
-        //TODO add logic to deposit
+    public void deposit(Double amount) {
+        balance = balance.add(new BigDecimal(amount));
+    }
+
+    public void clear() {
+        balance = new BigDecimal(0);
     }
 }
