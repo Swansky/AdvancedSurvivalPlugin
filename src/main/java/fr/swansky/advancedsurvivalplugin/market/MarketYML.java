@@ -28,7 +28,7 @@ public class MarketYML extends Yml<Market> {
             marketSection = marketsSection.getConfigurationSection(key);
             itemsMarketSection = marketSection.getConfigurationSection("marketItems");
             String marketTitle = itemsMarketSection.getString("marketTitle");
-            Market market = new Market(key, marketTitle);
+            Market market = new Market(key, marketTitle,3);
             for (String itemsMarketSectionKey : itemsMarketSection.getKeys(false)) {
 
                 itemMarketSection = itemsMarketSection.getConfigurationSection(itemsMarketSectionKey);

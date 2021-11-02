@@ -3,7 +3,10 @@ package fr.swansky.advancedsurvivalplugin.market;
 import fr.swansky.advancedsurvivalplugin.data.Controller;
 import fr.swansky.advancedsurvivalplugin.market.models.Market;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 public class MarketManager implements Controller<Market> {
     private final MarketYML marketYML;
@@ -14,14 +17,7 @@ public class MarketManager implements Controller<Market> {
     }
 
     public Optional<Market> getMarketByIdentificationName(String id) {
-        //TODO add code for return market by id name
-        return Optional.empty();
-    }
-
-    public List<Market> getAllMarket() {
-        List<Market> markets = new ArrayList<>();
-        //TODO add code for get all markets
-        return markets;
+        return Optional.ofNullable(marketMap.get(id));
     }
 
 
@@ -50,5 +46,9 @@ public class MarketManager implements Controller<Market> {
         for (Market market : read) {
             marketMap.put(market.getMarketID(), market);
         }
+    }
+
+    public Map<String, Market> getMarketMap() {
+        return marketMap;
     }
 }

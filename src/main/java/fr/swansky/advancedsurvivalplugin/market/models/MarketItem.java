@@ -1,8 +1,10 @@
 package fr.swansky.advancedsurvivalplugin.market.models;
 
+import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 
-public class MarketItem {
+public class MarketItem implements Clickable {
     private final String identificationName;
     private final String displayName;
     private final ItemStack icon;
@@ -61,4 +63,14 @@ public class MarketItem {
     public Double getPurchasePrice() {
         return purchasePrice;
     }
+
+    @Override
+    public void click(Player player, ClickType clickType) {
+        if (clickType.isLeftClick()) {
+
+        } else if (clickType.isRightClick()) {
+
+        }
+    }
+
 }
