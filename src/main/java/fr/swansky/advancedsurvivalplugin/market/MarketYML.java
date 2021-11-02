@@ -21,44 +21,48 @@ public class MarketYML extends Yml<Market> {
     public List<Market> read() {
         List<Market> markets = new ArrayList<>();
         ConfigurationSection marketsSection = config.createSection("markets");
-        ConfigurationSection marketSection;
-        ConfigurationSection itemsMarketSection;
-        ConfigurationSection itemMarketSection;
-        for (String key : marketsSection.getKeys(false)) {
-            marketSection = marketsSection.getConfigurationSection(key);
-            itemsMarketSection = marketSection.getConfigurationSection("marketItems");
-            String marketTitle = itemsMarketSection.getString("marketTitle");
-            Market market = new Market(key, marketTitle,3);
-            for (String itemsMarketSectionKey : itemsMarketSection.getKeys(false)) {
+        for (String marketID : marketsSection.getKeys(false)) {
+            ConfigurationSection marketSection = marketsSection.getConfigurationSection(marketID);
+            String marketTitle = marketSection.getString("title");
+            int row = marketSection.getInt("row");
+            Market market = new Market(marketID, marketTitle, row);
 
-                itemMarketSection = itemsMarketSection.getConfigurationSection(itemsMarketSectionKey);
-                String displayName = itemMarketSection.getString("displayName");
-                ItemStack itemForMarket = itemMarketSection.getItemStack("itemForMarket");
-                ItemStack icon = itemMarketSection.getItemStack("icon");
-                Double sellPrice = itemMarketSection.getDouble("sellPrice");
-                Double purchasePrice = itemMarketSection.getDouble("purchasePrice");
-                MarketItem marketItem = new MarketItem(itemsMarketSectionKey, displayName, icon, itemForMarket, sellPrice, purchasePrice);
-                market.addMarketItem(marketItem);
+            ConfigurationSection marketItemsSection = marketSection.getConfigurationSection("marketItems");
+            for (String marketItemKey : marketItemsSection.getKeys(false)) {
+                ConfigurationSection marketItemSection = marketItemsSection.getConfigurationSection(marketItemKey);
+                String displayName = marketItemSection.getString("displayName");
+                ItemStack icon = marketItemSection.getItemStack("icon");
+                ItemStack itemForMarket = marketItemSection.getItemStack("itemForMarket");
+                Double sellPrice = marketItemSection.getDouble("sellPrice");
+                Double purchasePrice = marketItemSection.getDouble("purchasePrice");
+                int rowPosition = marketItemSection.getInt("row");
+                int columPosition = marketItemSection.getInt("column");
+                MarketItem marketItem = new MarketItem(marketItemKey, displayName, icon, itemForMarket, sellPrice, purchasePrice, rowPosition,columPosition);
+
+                market.addClickableItem(marketItem,rowPosition,columPosition);
             }
-            markets.add(market);
+
         }
+
         return markets;
     }
 
     @Override
     public void write(Market market) {
-        ConfigurationSection markets = config.createSection("markets." + market.getMarketID());
-        markets.set("marketTitle", market.getMarketTitle());
-        ConfigurationSection marketItems = markets.createSection("marketItems");
-        ConfigurationSection marketItem;
-        for (MarketItem item : market.getMarketItems()) {
-            marketItems.set(item.getIdentificationName(), item);
-            marketItem = marketItems.createSection(item.getIdentificationName());
-            marketItem.set("displayName", item.getDisplayName());
-            marketItem.set("icon", item.getIcon());
-            marketItem.set("itemForMarket", item.getItemForMarket());
-            marketItem.set("sellPrice", item.getSellPrice());
-            marketItem.set("purchasePrice", item.getPurchasePrice());
+        ConfigurationSection marketConfigSection = config.createSection("markets." + market.getMarketID());
+        marketConfigSection.set("title", market.getInventoryName());
+        marketConfigSection.set("row", market.getRow());
+        ConfigurationSection marketItemsSection = marketConfigSection.createSection("marketItems");
+        for (Integer value : market.getClickableMap().keySet()) {
+            MarketItem marketItem = (MarketItem) market.getClickableMap().get(value);
+            ConfigurationSection marketItemSection = marketItemsSection.createSection(marketItem.getIdentificationName());
+            marketItemSection.set("displayName", marketItem.getDisplayName());
+            marketItemSection.set("itemForMarket", marketItem.getItemForMarket());
+            marketItemSection.set("icon", marketItem.getIcon());
+            marketItemSection.set("sellPrice", marketItem.getSellPrice());
+            marketItemSection.set("purchasePrice", marketItem.getPurchasePrice());
+            marketItemSection.set("row",marketItem.getRowPosition());
+            marketItemSection.set("column",marketItem.getColumnPosition());
         }
         save();
     }

@@ -42,7 +42,7 @@ public class AddMarketCommand implements CommandExecutor {
                 for (int i = 1; i < args.length; i++) {
                     marketTitle.append(args[i]);
                 }
-                Market market = marketManager.createMarket(id, marketTitle.toString());
+                Market market = new Market(id,marketTitle.toString(),3);
             }
             //TODO add code for add market command
         }

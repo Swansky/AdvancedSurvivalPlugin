@@ -11,33 +11,41 @@ public class MarketItem implements Clickable {
     private final ItemStack itemForMarket;
     private final Double sellPrice;
     private final Double purchasePrice;
+    private final int rowPosition;
+    private final int columnPosition;
 
 
-    public MarketItem(String identificationName, String displayName, ItemStack itemForMarket, Double sellPrice, Double purchasePrice) {
+    public MarketItem(String identificationName, String displayName, ItemStack itemForMarket, Double sellPrice, Double purchasePrice, int rowPosition, int columnPosition) {
         this.identificationName = identificationName;
         this.displayName = displayName;
         this.itemForMarket = itemForMarket;
         this.icon = itemForMarket.clone();
         this.sellPrice = sellPrice;
         this.purchasePrice = purchasePrice;
+        this.rowPosition = rowPosition;
+        this.columnPosition = columnPosition;
     }
 
-    public MarketItem(String identificationName, String displayName, ItemStack icon, ItemStack itemForMarket, Double sellPrice, Double purchasePrice) {
+    public MarketItem(String identificationName, String displayName, ItemStack icon, ItemStack itemForMarket, Double sellPrice, Double purchasePrice, int rowPosition, int columnPosition) {
         this.identificationName = identificationName;
         this.displayName = displayName;
         this.icon = icon;
         this.itemForMarket = itemForMarket;
         this.sellPrice = sellPrice;
         this.purchasePrice = purchasePrice;
+        this.rowPosition = rowPosition;
+        this.columnPosition = columnPosition;
     }
 
-    public MarketItem(String identificationName, ItemStack itemForMarket, Double sellPrice, Double purchasePrice) {
+    public MarketItem(String identificationName, ItemStack itemForMarket, Double sellPrice, Double purchasePrice, int rowPosition, int columnPosition) {
         this.identificationName = identificationName;
         this.itemForMarket = itemForMarket;
         this.displayName = itemForMarket.displayName().examinableName();
         this.icon = itemForMarket.clone();
         this.sellPrice = sellPrice;
         this.purchasePrice = purchasePrice;
+        this.rowPosition = rowPosition;
+        this.columnPosition = columnPosition;
     }
 
     public String getDisplayName() {
@@ -73,4 +81,11 @@ public class MarketItem implements Clickable {
         }
     }
 
+    public int getRowPosition() {
+        return rowPosition;
+    }
+
+    public int getColumnPosition() {
+        return columnPosition;
+    }
 }

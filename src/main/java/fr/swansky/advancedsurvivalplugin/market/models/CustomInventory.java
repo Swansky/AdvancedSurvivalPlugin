@@ -16,19 +16,20 @@ import java.util.Map;
 public class CustomInventory implements InventoryHolder {
 
     private final Inventory inventory;
-    private final int row, column;
+    private final int row, column = 8;
     private final Map<Integer, Clickable> clickableMap = new HashMap<>();
-
-    public CustomInventory(String titleInventory,int row) {
-        this.inventory = Bukkit.createInventory(this, row * 8,Component.text(titleInventory));
+    private final String inventoryTitle;
+    public CustomInventory(String titleInventory, int row) {
+        this.inventory = Bukkit.createInventory(this, row * 8, Component.text(titleInventory));
         this.row = row;
-        this.column = 8;
+
+        this.inventoryTitle = titleInventory;
     }
 
     public CustomInventory(int row) {
         this.inventory = Bukkit.createInventory(this, row * 8);
         this.row = row;
-        this.column = 8;
+        this.inventoryTitle = "custom Inventory";
     }
 
     public static CustomInventory createInventory(int row) {
@@ -103,5 +104,13 @@ public class CustomInventory implements InventoryHolder {
 
     public Map<Integer, Clickable> getClickableMap() {
         return clickableMap;
+    }
+
+    public String getInventoryName() {
+        return this.inventoryTitle;
+    }
+
+    public int getRow() {
+        return row;
     }
 }

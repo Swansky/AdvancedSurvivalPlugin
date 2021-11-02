@@ -8,6 +8,7 @@ import fr.swansky.advancedsurvivalplugin.market.MarketManager;
 import fr.swansky.advancedsurvivalplugin.market.commands.AddMarketCommand;
 import fr.swansky.advancedsurvivalplugin.market.commands.AddVillagerMarketCommand;
 import fr.swansky.advancedsurvivalplugin.market.commands.DeleteMarketCommand;
+import fr.swansky.advancedsurvivalplugin.market.listeners.InventoryClickListener;
 import org.bukkit.NamespacedKey;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -72,6 +73,7 @@ public final class AdvancedSurvivalPlugin extends JavaPlugin {
         final PluginManager pm = this.getServer().getPluginManager();
 
         pm.registerEvents(new ClickCustomItemListener(customItemManager), this);
+        pm.registerEvents(new InventoryClickListener(), this);
 
     }
 
