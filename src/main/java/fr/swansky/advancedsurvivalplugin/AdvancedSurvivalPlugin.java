@@ -4,6 +4,7 @@ import fr.swansky.advancedsurvivalplugin.customItem.CustomItemManager;
 import fr.swansky.advancedsurvivalplugin.customItem.commands.GiveCustomItemCommand;
 import fr.swansky.advancedsurvivalplugin.customItem.listeners.ClickCustomItemListener;
 import fr.swansky.advancedsurvivalplugin.data.YmlManager;
+import fr.swansky.advancedsurvivalplugin.market.MarketManager;
 import fr.swansky.advancedsurvivalplugin.market.commands.AddMarketCommand;
 import fr.swansky.advancedsurvivalplugin.market.commands.AddVillagerMarketCommand;
 import fr.swansky.advancedsurvivalplugin.market.commands.DeleteMarketCommand;
@@ -16,6 +17,7 @@ public final class AdvancedSurvivalPlugin extends JavaPlugin {
     public static NamespacedKey NAMESPACE_KEY;
     private YmlManager ymlManager;
     private CustomItemManager customItemManager;
+    private MarketManager marketManager;
 
     @Override
     public void onLoad() {
@@ -27,6 +29,7 @@ public final class AdvancedSurvivalPlugin extends JavaPlugin {
     public void onEnable() {
         this.ymlManager = new YmlManager();
         this.customItemManager = new CustomItemManager();
+        this.marketManager = new MarketManager();
         registerEvents();
         registerCommands();
 

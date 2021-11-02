@@ -12,8 +12,8 @@ public class MarketManager implements Controller<Market> {
     private final MarketYML marketYML;
     private final Map<String, Market> marketMap = new HashMap<>();
 
-    public MarketManager(MarketYML marketYML) {
-        this.marketYML = marketYML;
+    public MarketManager() {
+        this.marketYML = new MarketYML();
     }
 
     public Optional<Market> getMarketByIdentificationName(String id) {
