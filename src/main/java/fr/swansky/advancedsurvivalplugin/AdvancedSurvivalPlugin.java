@@ -43,7 +43,7 @@ public final class AdvancedSurvivalPlugin extends JavaPlugin {
         getCommand("customItem").setExecutor(new GiveCustomItemCommand());
 
         // Markets
-        getCommand("addMarket").setExecutor(new AddMarketCommand());
+        getCommand("addMarket").setExecutor(new AddMarketCommand(marketManager));
         getCommand("addVillagerMarket").setExecutor(new AddVillagerMarketCommand());
         getCommand("deleteMarket").setExecutor(new DeleteMarketCommand());
 

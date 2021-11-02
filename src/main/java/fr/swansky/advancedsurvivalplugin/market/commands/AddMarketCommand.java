@@ -1,7 +1,8 @@
 package fr.swansky.advancedsurvivalplugin.market.commands;
 
 import fr.swansky.advancedsurvivalplugin.Rank;
-import org.bukkit.ChatColor;
+import fr.swansky.advancedsurvivalplugin.market.MarketManager;
+import fr.swansky.advancedsurvivalplugin.market.models.Market;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -9,6 +10,12 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 public class AddMarketCommand implements CommandExecutor {
+    private final MarketManager marketManager;
+
+    public AddMarketCommand(MarketManager marketManager) {
+        this.marketManager = marketManager;
+    }
+
     /**
      * Executes the given command, returning its success.
      * <br>
@@ -28,6 +35,14 @@ public class AddMarketCommand implements CommandExecutor {
             if (!player.hasPermission(Rank.ADMIN.getPermission())) {
                 player.sendMessage(Rank.NO_PERMISSION_MESSAGE);
                 return true;
+            }
+            if (args.length > 1) {
+                String id = args[0];
+                StringBuilder marketTitle = new StringBuilder();
+                for (int i = 1; i < args.length; i++) {
+                    marketTitle.append(args[i]);
+                }
+                Market market = marketManager.createMarket(id, marketTitle.toString());
             }
             //TODO add code for add market command
         }
