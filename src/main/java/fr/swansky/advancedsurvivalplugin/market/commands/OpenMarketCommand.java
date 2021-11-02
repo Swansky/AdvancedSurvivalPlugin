@@ -1,6 +1,6 @@
 package fr.swansky.advancedsurvivalplugin.market.commands;
 
-import fr.swansky.advancedsurvivalplugin.market.MarketController;
+import fr.swansky.advancedsurvivalplugin.market.MarketManager;
 import fr.swansky.advancedsurvivalplugin.market.models.Market;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -15,9 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OpenMarketCommand implements CommandExecutor, TabCompleter {
-    private final MarketController marketController;
+    private final MarketManager marketController;
 
-    public OpenMarketCommand(MarketController marketController) {
+    public OpenMarketCommand(MarketManager marketController) {
         this.marketController = marketController;
 
     }

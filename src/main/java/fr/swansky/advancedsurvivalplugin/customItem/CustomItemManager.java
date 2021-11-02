@@ -17,6 +17,9 @@ public class CustomItemManager {
     private void initCustomItems() {
         BedrockBreakerItem bedrockBreakerItem = new BedrockBreakerItem();
         customItemMap.put(bedrockBreakerItem.getCustomItemID(), bedrockBreakerItem);
+
+        GoldenLassoItem goldenLassoItem = new GoldenLassoItem();
+
     }
 
     public Optional<CustomItem> findCustomItemByID(String s) {

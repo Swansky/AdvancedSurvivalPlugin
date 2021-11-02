@@ -1,21 +1,20 @@
 package fr.swansky.advancedsurvivalplugin.market.commands;
 
-import fr.swansky.advancedsurvivalplugin.market.MarketController;
+import fr.swansky.advancedsurvivalplugin.market.MarketManager;
 import fr.swansky.advancedsurvivalplugin.market.models.Market;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.checkerframework.checker.units.qual.C;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 
 public class MarketListCommand implements CommandExecutor {
-    private final MarketController marketManager;
+    private final MarketManager marketManager;
 
-    public MarketListCommand(MarketController marketManager) {
+    public MarketListCommand(MarketManager marketManager) {
         this.marketManager = marketManager;
     }
 

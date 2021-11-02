@@ -1,6 +1,6 @@
 package fr.swansky.advancedsurvivalplugin.market;
 
-import fr.swansky.advancedsurvivalplugin.data.Controller;
+import fr.swansky.advancedsurvivalplugin.data.Manager;
 import fr.swansky.advancedsurvivalplugin.market.exceptions.MarketException;
 import fr.swansky.advancedsurvivalplugin.market.models.Market;
 
@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public class MarketController implements Controller<Market> {
+public class MarketManager implements Manager<Market> {
     private final MarketYML marketYML;
     private final Map<String, Market> marketMap = new HashMap<>();
 
-    public MarketController() {
+    public MarketManager() {
         this.marketYML = new MarketYML();
         load();
     }

@@ -13,14 +13,15 @@ public class BedrockBreakerItem extends CustomItem {
     private static final String customItemID = "BEDROCK_BREAKER";
     private static final String customName = ChatColor.RED + "Bedrock breaker";
     private static final Material material = Material.GOLDEN_PICKAXE;
+    private static final String description = "";
 
     public BedrockBreakerItem() {
-        super(material, customItemID, customName);
+        super(material, customItemID, customName, description);
     }
 
 
     public BedrockBreakerItem(int amount) {
-        super(material, amount, customItemID, customName);
+        super(material, amount, customItemID, customName, description);
     }
 
     /**
@@ -31,7 +32,7 @@ public class BedrockBreakerItem extends CustomItem {
      *                                  returns an item meta not created by the item factory
      */
     public BedrockBreakerItem(@NotNull ItemStack stack) throws IllegalArgumentException {
-        super(stack, customItemID, customName);
+        super(stack, customItemID, customName, description);
     }
 
     @Override

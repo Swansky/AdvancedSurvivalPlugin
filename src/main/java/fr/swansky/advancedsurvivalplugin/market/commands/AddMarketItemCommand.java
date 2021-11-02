@@ -1,6 +1,6 @@
 package fr.swansky.advancedsurvivalplugin.market.commands;
 
-import fr.swansky.advancedsurvivalplugin.market.MarketController;
+import fr.swansky.advancedsurvivalplugin.market.MarketManager;
 import fr.swansky.advancedsurvivalplugin.market.models.Market;
 import fr.swansky.advancedsurvivalplugin.market.models.MarketItem;
 import org.bukkit.ChatColor;
@@ -15,9 +15,9 @@ import org.jetbrains.annotations.NotNull;
 import static fr.swansky.advancedsurvivalplugin.utils.ParseUtils.*;
 
 public class AddMarketItemCommand implements CommandExecutor {
-    private final MarketController marketController;
+    private final MarketManager marketController;
 
-    public AddMarketItemCommand(MarketController marketController) {
+    public AddMarketItemCommand(MarketManager marketController) {
         this.marketController = marketController;
     }
 
