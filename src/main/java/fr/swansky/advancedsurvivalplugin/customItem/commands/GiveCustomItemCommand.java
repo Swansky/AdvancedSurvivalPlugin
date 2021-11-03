@@ -1,7 +1,7 @@
 package fr.swansky.advancedsurvivalplugin.customItem.commands;
 
 import fr.swansky.advancedsurvivalplugin.customItem.BedrockBreakerItem;
-import fr.swansky.advancedsurvivalplugin.customItem.models.CustomItem;
+import fr.swansky.advancedsurvivalplugin.customItem.GoldenLassoItem;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -41,6 +41,11 @@ public class GiveCustomItemCommand implements CommandExecutor, TabCompleter {
                         player.getInventory().addItem(itemStack);
                         player.sendMessage("L'objet a été donné");
                         break;
+                    case "goldenLasso":
+                        ItemStack goldenLasso = new GoldenLassoItem();
+
+                        player.getInventory().addItem(goldenLasso);
+                        player.sendMessage("L'objet a été donné");
                     default:
                         player.sendMessage("Ce type n'existe pas");
                 }
@@ -68,6 +73,7 @@ public class GiveCustomItemCommand implements CommandExecutor, TabCompleter {
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args) {
         List<String> list = new ArrayList<>();
         list.add("bedrockBreaker");
+        list.add("goldenLasso");
         return list;
     }
 }

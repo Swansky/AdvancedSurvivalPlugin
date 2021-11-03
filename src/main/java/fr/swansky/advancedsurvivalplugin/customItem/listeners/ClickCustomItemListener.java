@@ -5,6 +5,9 @@ import fr.swansky.advancedsurvivalplugin.customItem.CustomItemManager;
 import fr.swansky.advancedsurvivalplugin.customItem.models.CustomItem;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
+import org.bukkit.event.player.PlayerEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -20,27 +23,34 @@ public class ClickCustomItemListener implements Listener {
     }
 
     @EventHandler
-    private void onClickItem(PlayerInteractEvent event) {
-        //TODO add code for click custom item listener
-        if (event.getItem() != null) {
+    private void playerInteractEvent(PlayerInteractEvent event) {
+        transfer(event.getItem(), event, event.getAction());
+    }
 
-            ItemStack item = event.getItem();
+    @EventHandler
+    private void playerInteractEntityEvent(PlayerInteractEntityEvent event) {
+        ItemStack itemInMainHand = event.getPlayer().getInventory().getItemInMainHand();
+        transfer(itemInMainHand, event, Action.RIGHT_CLICK_BLOCK);
+    }
+
+
+    private void transfer(ItemStack item, PlayerEvent event, Action action) {
+        if (item != null) {
             ItemMeta itemMeta = item.getItemMeta();
             if (itemMeta.getPersistentDataContainer().has(AdvancedSurvivalPlugin.NAMESPACE_KEY, PersistentDataType.STRING)) {
                 String s = itemMeta.getPersistentDataContainer().get(AdvancedSurvivalPlugin.NAMESPACE_KEY, PersistentDataType.STRING);
                 Optional<CustomItem> customItemByID = customItemManager.findCustomItemByID(s);
                 if (customItemByID.isPresent()) {
+
                     CustomItem customItem = customItemByID.get();
-                    if (event.getAction().isLeftClick()) {
+                    if (action.isLeftClick()) {
                         customItem.leftClick(event);
-                    } else if (event.getAction().isRightClick()) {
+                    } else if (action.isRightClick()) {
                         customItem.rightClick(event);
                     }
                 }
-
             }
-
-
         }
     }
+
 }

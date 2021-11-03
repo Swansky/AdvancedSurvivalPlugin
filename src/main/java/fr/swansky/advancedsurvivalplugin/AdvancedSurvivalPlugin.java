@@ -17,7 +17,6 @@ import fr.swansky.advancedsurvivalplugin.home.commands.SetHomeCommand;
 import fr.swansky.advancedsurvivalplugin.market.MarketManager;
 import fr.swansky.advancedsurvivalplugin.market.commands.*;
 import fr.swansky.advancedsurvivalplugin.market.listeners.InventoryClickListener;
-import fr.swansky.advancedsurvivalplugin.market.models.MarketItem;
 import org.bukkit.NamespacedKey;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -30,6 +29,7 @@ public final class AdvancedSurvivalPlugin extends JavaPlugin {
     private MarketManager marketController;
     private WalletManager walletManager;
     private HomeManager homeManager;
+
     @Override
     public void onLoad() {
         INSTANCE = this;
@@ -94,7 +94,7 @@ public final class AdvancedSurvivalPlugin extends JavaPlugin {
 
         pm.registerEvents(new ClickCustomItemListener(customItemManager), this);
         pm.registerEvents(new InventoryClickListener(), this);
-        pm.registerEvents(new PlayerJoinListener(walletManager),this);
+        pm.registerEvents(new PlayerJoinListener(walletManager), this);
     }
 
 
