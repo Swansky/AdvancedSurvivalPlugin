@@ -40,5 +40,14 @@ commands:
   transferMoney:
     description: transfer money to other player
     usage: /transferMoney <player> <amount>
+  home:
+    description: teleport to home and show all homes
+    usage: /home <home name>
+  sethome:
+    description: add home
+    usage: /sethome <home name>
+  delhome:
+    description: delete home
+    usage: /delhome <home name>
 
 

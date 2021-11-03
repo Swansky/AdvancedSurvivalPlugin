@@ -10,6 +10,10 @@ import fr.swansky.advancedsurvivalplugin.economy.commands.MoneyCommand;
 import fr.swansky.advancedsurvivalplugin.economy.commands.ResetWalletCommand;
 import fr.swansky.advancedsurvivalplugin.economy.commands.TransferMoneyCommand;
 import fr.swansky.advancedsurvivalplugin.economy.listeners.PlayerJoinListener;
+import fr.swansky.advancedsurvivalplugin.home.HomeManager;
+import fr.swansky.advancedsurvivalplugin.home.commands.DeleteHomeCommand;
+import fr.swansky.advancedsurvivalplugin.home.commands.HomeCommand;
+import fr.swansky.advancedsurvivalplugin.home.commands.SetHomeCommand;
 import fr.swansky.advancedsurvivalplugin.market.MarketManager;
 import fr.swansky.advancedsurvivalplugin.market.commands.*;
 import fr.swansky.advancedsurvivalplugin.market.listeners.InventoryClickListener;
@@ -25,6 +29,7 @@ public final class AdvancedSurvivalPlugin extends JavaPlugin {
     private CustomItemManager customItemManager;
     private MarketManager marketController;
     private WalletManager walletManager;
+    private HomeManager homeManager;
     @Override
     public void onLoad() {
         INSTANCE = this;
@@ -37,6 +42,7 @@ public final class AdvancedSurvivalPlugin extends JavaPlugin {
         this.walletManager = new WalletManager();
         this.customItemManager = new CustomItemManager();
         this.marketController = new MarketManager();
+        this.homeManager = new HomeManager();
 
         registerEvents();
         registerCommands();
@@ -66,12 +72,14 @@ public final class AdvancedSurvivalPlugin extends JavaPlugin {
         getCommand("resetMoney").setExecutor(new ResetWalletCommand(walletManager));
         getCommand("transferMoney").setExecutor(new TransferMoneyCommand(walletManager));
         getCommand("money").setExecutor(new MoneyCommand(walletManager));
-      /*
 
         // Homes
-        getCommand("delHome").setExecutor(new DeleteHomeCommand());
-        getCommand("home").setExecutor(new HomeCommand());
-        getCommand("setHome").setExecutor(new SetHomeCommand());
+        getCommand("delHome").setExecutor(new DeleteHomeCommand(homeManager));
+        getCommand("home").setExecutor(new HomeCommand(homeManager));
+        getCommand("setHome").setExecutor(new SetHomeCommand(homeManager));
+
+      /*
+
 
 
 

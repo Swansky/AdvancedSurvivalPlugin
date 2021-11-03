@@ -19,6 +19,7 @@ public class HomeYML extends Yml<Home> {
     public List<Home> read() {
         final List<Home> homes = new ArrayList<>();
         final ConfigurationSection homesFileSection = config.getConfigurationSection("homes");
+        if(homesFileSection == null) return homes;
         UUID playerUUID;
         ConfigurationSection homesSection;
         ConfigurationSection homeSection;
