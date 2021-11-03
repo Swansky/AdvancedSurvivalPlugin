@@ -13,7 +13,10 @@ commands:
     usage: /addMarket <unique id> <market title>
   addVillagerMarket:
     description:  add villager market
-    usage: /addVillagerMarket <market id>
+    usage: /addVillagerMarket <market id> <villager name>
+  deleteVillagerMarket:
+    description: delete actual villager market
+    usage: /deleteVillagerMarket <uuid>
   deleteMarket:
     description: delete market
     usage: /deleteMarket <market id>

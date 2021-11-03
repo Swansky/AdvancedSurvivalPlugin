@@ -14,8 +14,10 @@ import fr.swansky.advancedsurvivalplugin.home.HomeManager;
 import fr.swansky.advancedsurvivalplugin.home.commands.DeleteHomeCommand;
 import fr.swansky.advancedsurvivalplugin.home.commands.HomeCommand;
 import fr.swansky.advancedsurvivalplugin.home.commands.SetHomeCommand;
+import fr.swansky.advancedsurvivalplugin.market.CustomMarketVillagerManager;
 import fr.swansky.advancedsurvivalplugin.market.MarketManager;
 import fr.swansky.advancedsurvivalplugin.market.commands.*;
+import fr.swansky.advancedsurvivalplugin.market.listeners.CustomMarketVillagerClickEvent;
 import fr.swansky.advancedsurvivalplugin.market.listeners.InventoryClickListener;
 import fr.swansky.advancedsurvivalplugin.utilsGameplay.commands.CraftCommand;
 import fr.swansky.advancedsurvivalplugin.utilsGameplay.commands.EnderChestCommand;
@@ -30,9 +32,10 @@ public final class AdvancedSurvivalPlugin extends JavaPlugin {
     public static NamespacedKey NAMESPACE_KEY;
     private YmlManager ymlManager;
     private CustomItemManager customItemManager;
-    private MarketManager marketController;
+    private MarketManager marketManager;
     private WalletManager walletManager;
     private HomeManager homeManager;
+    private CustomMarketVillagerManager customMarketVillagerManager;
 
     @Override
     public void onLoad() {
@@ -45,7 +48,8 @@ public final class AdvancedSurvivalPlugin extends JavaPlugin {
         this.ymlManager = new YmlManager();
         this.walletManager = new WalletManager();
         this.customItemManager = new CustomItemManager();
-        this.marketController = new MarketManager();
+        this.marketManager = new MarketManager();
+        this.customMarketVillagerManager = new CustomMarketVillagerManager(marketManager);
         this.homeManager = new HomeManager();
 
         registerEvents();
@@ -64,12 +68,13 @@ public final class AdvancedSurvivalPlugin extends JavaPlugin {
         getCommand("customItem").setExecutor(new GiveCustomItemCommand());
 
         // Markets
-        getCommand("addMarket").setExecutor(new AddMarketCommand(marketController));
-        getCommand("addVillagerMarket").setExecutor(new AddVillagerMarketCommand());
-        getCommand("deleteMarket").setExecutor(new DeleteMarketCommand(marketController));
-        getCommand("marketList").setExecutor(new MarketListCommand(marketController));
-        getCommand("addMarketItem").setExecutor(new AddMarketItemCommand(marketController));
-        getCommand("openMarket").setExecutor(new OpenMarketCommand(marketController));
+        getCommand("addMarket").setExecutor(new AddMarketCommand(marketManager));
+        getCommand("addVillagerMarket").setExecutor(new AddVillagerMarketCommand(marketManager, customMarketVillagerManager));
+       getCommand("deleteVillagerMarket").setExecutor(new DeleteVillagerMarketCommand(customMarketVillagerManager));
+        getCommand("deleteMarket").setExecutor(new DeleteMarketCommand(marketManager));
+        getCommand("marketList").setExecutor(new MarketListCommand(marketManager));
+        getCommand("addMarketItem").setExecutor(new AddMarketItemCommand(marketManager));
+        getCommand("openMarket").setExecutor(new OpenMarketCommand(marketManager));
 
         // Economy system
         getCommand("giveMoney").setExecutor(new GiveMoneyCommand(walletManager));
@@ -97,9 +102,10 @@ public final class AdvancedSurvivalPlugin extends JavaPlugin {
         pm.registerEvents(new ClickCustomItemListener(customItemManager), this);
         pm.registerEvents(new InventoryClickListener(), this);
         pm.registerEvents(new PlayerJoinListener(walletManager), this);
+        pm.registerEvents(new CustomMarketVillagerClickEvent(customMarketVillagerManager), this);
 
         //utils gameplay
-        pm.registerEvents(new CoordinateOnDeathListener(),this);
+        pm.registerEvents(new CoordinateOnDeathListener(), this);
     }
 
 
@@ -107,8 +113,8 @@ public final class AdvancedSurvivalPlugin extends JavaPlugin {
         return ymlManager;
     }
 
-    public MarketManager getMarketController() {
-        return marketController;
+    public MarketManager getMarketManager() {
+        return marketManager;
     }
 
     public WalletManager getWalletManager() {

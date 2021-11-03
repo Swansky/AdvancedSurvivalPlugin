@@ -57,9 +57,14 @@ public class MarketManager implements Manager<Market> {
         return this.marketMap.containsKey(id);
     }
 
+    @Deprecated(since = "replace return by Optional<Market>")
     public Market getMarketByID(String id) {
         return this.marketMap.get(id);
     }
+
+  /*  public Optional<Market> getMarketByID(String id) {
+        return Optional.ofNullable(this.marketMap.get(id));
+    }*/
 
     public Map<String, Market> getMarketMap() {
         return marketMap;

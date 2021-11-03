@@ -37,18 +37,20 @@ public class ClickCustomItemListener implements Listener {
     private void transfer(ItemStack item, PlayerEvent event, Action action) {
         if (item != null) {
             ItemMeta itemMeta = item.getItemMeta();
-            if (itemMeta.getPersistentDataContainer().has(AdvancedSurvivalPlugin.NAMESPACE_KEY, PersistentDataType.STRING)) {
-                String s = itemMeta.getPersistentDataContainer().get(AdvancedSurvivalPlugin.NAMESPACE_KEY, PersistentDataType.STRING);
-                Optional<CustomItem> customItemByID = customItemManager.findCustomItemByID(s);
-                if (customItemByID.isPresent()) {
-
-                    CustomItem customItem = customItemByID.get();
-                    if (action.isLeftClick()) {
-                        customItem.leftClick(event);
-                    } else if (action.isRightClick()) {
-                        customItem.rightClick(event);
+            if (itemMeta != null) {
+                if (itemMeta.getPersistentDataContainer().has(AdvancedSurvivalPlugin.NAMESPACE_KEY, PersistentDataType.STRING)) {
+                    String s = itemMeta.getPersistentDataContainer().get(AdvancedSurvivalPlugin.NAMESPACE_KEY, PersistentDataType.STRING);
+                    Optional<CustomItem> customItemByID = customItemManager.findCustomItemByID(s);
+                    if (customItemByID.isPresent()) {
+                        CustomItem customItem = customItemByID.get();
+                        if (action.isLeftClick()) {
+                            customItem.leftClick(event);
+                        } else if (action.isRightClick()) {
+                            customItem.rightClick(event);
+                        }
                     }
                 }
+
             }
         }
     }

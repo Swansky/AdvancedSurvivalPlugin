@@ -55,7 +55,6 @@ public class DeleteMarketCommand implements CommandExecutor, TabCompleter {
             } else {
                 player.sendMessage(ChatColor.GRAY + "Aucune market ID n'est precisé");
             }
-            //TODO add code for delete market command
         }
         return true;
     }
