@@ -1,5 +1,9 @@
 package fr.swansky.advancedsurvivalplugin.market.models;
 
+import fr.swansky.advancedsurvivalplugin.AdvancedSurvivalPlugin;
+import fr.swansky.advancedsurvivalplugin.economy.Wallet;
+import fr.swansky.advancedsurvivalplugin.economy.WalletManager;
+import fr.swansky.advancedsurvivalplugin.economy.exceptions.WalletWithdrawException;
 import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -19,6 +23,7 @@ public class MarketItem implements Clickable {
     private final Double purchasePrice;
     private final int rowPosition;
     private final int columnPosition;
+    private final WalletManager walletManager;
     private boolean sellable = false;
     private boolean purchasable = false;
 
@@ -31,6 +36,7 @@ public class MarketItem implements Clickable {
         this.purchasePrice = purchasePrice;
         this.rowPosition = rowPosition;
         this.columnPosition = columnPosition;
+        this.walletManager = AdvancedSurvivalPlugin.INSTANCE.getWalletManager();
     }
 
     public MarketItem(String identificationName, String displayName, ItemStack icon, ItemStack itemForMarket, Double sellPrice, Double purchasePrice, int rowPosition, int columnPosition) {
@@ -42,6 +48,7 @@ public class MarketItem implements Clickable {
         this.purchasePrice = purchasePrice;
         this.rowPosition = rowPosition;
         this.columnPosition = columnPosition;
+        this.walletManager = AdvancedSurvivalPlugin.INSTANCE.getWalletManager();
     }
 
     public MarketItem(String identificationName, ItemStack itemForMarket, Double sellPrice, Double purchasePrice, int rowPosition, int columnPosition) {
@@ -53,16 +60,29 @@ public class MarketItem implements Clickable {
         this.purchasePrice = purchasePrice;
         this.rowPosition = rowPosition;
         this.columnPosition = columnPosition;
+        this.walletManager = AdvancedSurvivalPlugin.INSTANCE.getWalletManager();
     }
 
 
     @Override
     public void click(Player player, ClickType clickType) {
+        Wallet wallet = walletManager.findWalletByPlayerUUID(player.getUniqueId());
         if (clickType.isLeftClick()) {
-            player.sendMessage("Vendre");
+            if (player.getInventory().contains(itemForMarket.getType(),1)) {
+                player.getInventory().removeItem(itemForMarket);
+                wallet.deposit(sellPrice);
+                player.sendMessage(ChatColor.GRAY + "Vous venez de ventre un item");
+            } else {
+                player.sendMessage(ChatColor.GRAY + "Vous n'avez pas cet item");
+            }
         } else if (clickType.isRightClick()) {
-            player.getInventory().addItem(itemForMarket);
-            player.sendMessage("Acheter");
+            try {
+                wallet.withdraw(purchasePrice);
+                player.getInventory().addItem(itemForMarket);
+                player.sendMessage(ChatColor.GRAY + "Vous venez d'acheter l'item !");
+            } catch (WalletWithdrawException e) {
+                player.sendMessage(ChatColor.GRAY + "Il semble que vous n'avez pas assez d'argent pour cette item :O");
+            }
         }
     }
 

@@ -4,6 +4,7 @@ import fr.swansky.advancedsurvivalplugin.Rank;
 import fr.swansky.advancedsurvivalplugin.market.MarketManager;
 import fr.swansky.advancedsurvivalplugin.market.models.Market;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -44,6 +45,7 @@ public class AddMarketCommand implements CommandExecutor {
                 for (int i = 2; i < args.length; i++) {
                     marketTitle.append(args[i]);
                 }
+
                 Market market = new Market(id,marketTitle.toString(),Integer.parseInt(row));
                 try {
                     marketController.add(market);

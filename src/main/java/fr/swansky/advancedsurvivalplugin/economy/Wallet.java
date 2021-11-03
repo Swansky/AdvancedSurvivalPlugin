@@ -43,4 +43,8 @@ public class Wallet {
     public void clear() {
         balance = new BigDecimal(0);
     }
+
+    public void setAccount(Double amount) {
+        balance = new BigDecimal(amount);
+    }
 }

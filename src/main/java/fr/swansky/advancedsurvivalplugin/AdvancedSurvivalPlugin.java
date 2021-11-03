@@ -9,9 +9,11 @@ import fr.swansky.advancedsurvivalplugin.economy.commands.GiveMoneyCommand;
 import fr.swansky.advancedsurvivalplugin.economy.commands.MoneyCommand;
 import fr.swansky.advancedsurvivalplugin.economy.commands.ResetWalletCommand;
 import fr.swansky.advancedsurvivalplugin.economy.commands.TransferMoneyCommand;
+import fr.swansky.advancedsurvivalplugin.economy.listeners.PlayerJoinListener;
 import fr.swansky.advancedsurvivalplugin.market.MarketManager;
 import fr.swansky.advancedsurvivalplugin.market.commands.*;
 import fr.swansky.advancedsurvivalplugin.market.listeners.InventoryClickListener;
+import fr.swansky.advancedsurvivalplugin.market.models.MarketItem;
 import org.bukkit.NamespacedKey;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -32,9 +34,10 @@ public final class AdvancedSurvivalPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         this.ymlManager = new YmlManager();
+        this.walletManager = new WalletManager();
         this.customItemManager = new CustomItemManager();
         this.marketController = new MarketManager();
-        this.walletManager = new WalletManager();
+
         registerEvents();
         registerCommands();
 
@@ -83,11 +86,19 @@ public final class AdvancedSurvivalPlugin extends JavaPlugin {
 
         pm.registerEvents(new ClickCustomItemListener(customItemManager), this);
         pm.registerEvents(new InventoryClickListener(), this);
-
+        pm.registerEvents(new PlayerJoinListener(walletManager),this);
     }
 
 
     public YmlManager getYmlManager() {
         return ymlManager;
+    }
+
+    public MarketManager getMarketController() {
+        return marketController;
+    }
+
+    public WalletManager getWalletManager() {
+        return walletManager;
     }
 }
