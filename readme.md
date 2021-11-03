@@ -12,6 +12,7 @@
 - /craft 
 - /ec
 - /slime
+- /back
 
 ## utils gameplay
 - coordinate on death

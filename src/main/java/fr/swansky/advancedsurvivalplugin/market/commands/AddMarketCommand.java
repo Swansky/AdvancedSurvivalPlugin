@@ -10,6 +10,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import static fr.swansky.advancedsurvivalplugin.utils.ParseUtils.IsInteger;
+
 public class AddMarketCommand implements CommandExecutor {
     private final MarketManager marketController;
 
@@ -44,18 +46,24 @@ public class AddMarketCommand implements CommandExecutor {
                 for (int i = 2; i < args.length; i++) {
                     marketTitle.append(args[i]);
                 }
-
-                Market market = new Market(id, marketTitle.toString(), Integer.parseInt(row));
-                try {
-                    marketController.add(market);
-                    marketController.save();
-                    player.sendMessage(ChatColor.GRAY + " Le market " + ChatColor.GREEN + marketTitle.toString() +
-                            ChatColor.GRAY + " avec l'id " +
-                            ChatColor.GREEN + id +
-                            ChatColor.GRAY + " a été crée.");
-                } catch (Exception e) {
-                    player.sendMessage(ChatColor.RED + "Impossible d'ajouter ce market.");
+                if (IsInteger(row)) {
+                    Market market = new Market(id, marketTitle.toString(), Integer.parseInt(row));
+                    try {
+                        marketController.add(market);
+                        marketController.save();
+                        player.sendMessage(ChatColor.GRAY + " Le market " + ChatColor.GREEN + marketTitle.toString() +
+                                ChatColor.GRAY + " avec l'id " +
+                                ChatColor.GREEN + id +
+                                ChatColor.GRAY + " a été crée.");
+                    } catch (Exception e) {
+                        player.sendMessage(ChatColor.RED + "Impossible d'ajouter ce market.");
+                    }
+                } else {
+                    player.sendMessage(ChatColor.GRAY + "Le nombre de ligne n'est pas valide");
                 }
+
+            } else {
+                player.sendMessage(ChatColor.GRAY + "Mauvaise commande: /addMarket <Market id> <row count> <market name>");
             }
         }
         return true;

@@ -19,10 +19,12 @@ import fr.swansky.advancedsurvivalplugin.market.MarketManager;
 import fr.swansky.advancedsurvivalplugin.market.commands.*;
 import fr.swansky.advancedsurvivalplugin.market.listeners.CustomMarketVillagerClickEvent;
 import fr.swansky.advancedsurvivalplugin.market.listeners.InventoryClickListener;
+import fr.swansky.advancedsurvivalplugin.utilsGameplay.BackManager;
 import fr.swansky.advancedsurvivalplugin.utilsGameplay.commands.CraftCommand;
 import fr.swansky.advancedsurvivalplugin.utilsGameplay.commands.EnderChestCommand;
 import fr.swansky.advancedsurvivalplugin.utilsGameplay.commands.SlimeCommand;
 import fr.swansky.advancedsurvivalplugin.utilsGameplay.listeners.CoordinateOnDeathListener;
+import fr.swansky.advancedsurvivalplugin.utilsGameplay.listeners.TeleportListener;
 import org.bukkit.NamespacedKey;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -36,6 +38,7 @@ public final class AdvancedSurvivalPlugin extends JavaPlugin {
     private WalletManager walletManager;
     private HomeManager homeManager;
     private CustomMarketVillagerManager customMarketVillagerManager;
+    private BackManager backManager;
 
     @Override
     public void onLoad() {
@@ -51,6 +54,7 @@ public final class AdvancedSurvivalPlugin extends JavaPlugin {
         this.marketManager = new MarketManager();
         this.customMarketVillagerManager = new CustomMarketVillagerManager(marketManager);
         this.homeManager = new HomeManager();
+        this.backManager = new BackManager();
 
         registerEvents();
         registerCommands();
@@ -70,7 +74,7 @@ public final class AdvancedSurvivalPlugin extends JavaPlugin {
         // Markets
         getCommand("addMarket").setExecutor(new AddMarketCommand(marketManager));
         getCommand("addVillagerMarket").setExecutor(new AddVillagerMarketCommand(marketManager, customMarketVillagerManager));
-       getCommand("deleteVillagerMarket").setExecutor(new DeleteVillagerMarketCommand(customMarketVillagerManager));
+        getCommand("deleteVillagerMarket").setExecutor(new DeleteVillagerMarketCommand(customMarketVillagerManager));
         getCommand("deleteMarket").setExecutor(new DeleteMarketCommand(marketManager));
         getCommand("marketList").setExecutor(new MarketListCommand(marketManager));
         getCommand("addMarketItem").setExecutor(new AddMarketItemCommand(marketManager));
@@ -106,6 +110,7 @@ public final class AdvancedSurvivalPlugin extends JavaPlugin {
 
         //utils gameplay
         pm.registerEvents(new CoordinateOnDeathListener(), this);
+        pm.registerEvents(new TeleportListener(backManager), this);
     }
 
 

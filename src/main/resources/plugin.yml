@@ -12,7 +12,7 @@ commands:
     description: addMarket
     usage: /addMarket <unique id> <market title>
   addVillagerMarket:
-    description:  add villager market
+    description: add villager market
     usage: /addVillagerMarket <market id> <villager name>
   deleteVillagerMarket:
     description: delete actual villager market
@@ -61,4 +61,7 @@ commands:
   slime:
     description: show if the chunk is a slime chunk
     usage: /slime
+  back:
+    description: back to old teleportation
+    usage: /back
 
