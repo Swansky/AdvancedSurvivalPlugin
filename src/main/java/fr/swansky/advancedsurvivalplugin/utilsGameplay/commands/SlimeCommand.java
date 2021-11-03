@@ -1,4 +1,4 @@
-package fr.swansky.advancedsurvivalplugin.utilsCommands;
+package fr.swansky.advancedsurvivalplugin.utilsGameplay.commands;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;

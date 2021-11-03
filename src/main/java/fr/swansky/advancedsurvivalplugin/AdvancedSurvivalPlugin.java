@@ -17,9 +17,10 @@ import fr.swansky.advancedsurvivalplugin.home.commands.SetHomeCommand;
 import fr.swansky.advancedsurvivalplugin.market.MarketManager;
 import fr.swansky.advancedsurvivalplugin.market.commands.*;
 import fr.swansky.advancedsurvivalplugin.market.listeners.InventoryClickListener;
-import fr.swansky.advancedsurvivalplugin.utilsCommands.CraftCommand;
-import fr.swansky.advancedsurvivalplugin.utilsCommands.EnderChestCommand;
-import fr.swansky.advancedsurvivalplugin.utilsCommands.SlimeCommand;
+import fr.swansky.advancedsurvivalplugin.utilsGameplay.commands.CraftCommand;
+import fr.swansky.advancedsurvivalplugin.utilsGameplay.commands.EnderChestCommand;
+import fr.swansky.advancedsurvivalplugin.utilsGameplay.commands.SlimeCommand;
+import fr.swansky.advancedsurvivalplugin.utilsGameplay.listeners.CoordinateOnDeathListener;
 import org.bukkit.NamespacedKey;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -96,6 +97,9 @@ public final class AdvancedSurvivalPlugin extends JavaPlugin {
         pm.registerEvents(new ClickCustomItemListener(customItemManager), this);
         pm.registerEvents(new InventoryClickListener(), this);
         pm.registerEvents(new PlayerJoinListener(walletManager), this);
+
+        //utils gameplay
+        pm.registerEvents(new CoordinateOnDeathListener(),this);
     }
 
 

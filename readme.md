@@ -13,6 +13,9 @@
 - /ec
 - /slime
 
+## utils gameplay
+- coordinate on death
+
 
 
 ## custom items list

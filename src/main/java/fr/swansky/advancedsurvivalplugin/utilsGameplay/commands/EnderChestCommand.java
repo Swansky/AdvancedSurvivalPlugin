@@ -1,4 +1,4 @@
-package fr.swansky.advancedsurvivalplugin.utilsCommands;
+package fr.swansky.advancedsurvivalplugin.utilsGameplay.commands;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -6,7 +6,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class CraftCommand implements CommandExecutor {
+public class EnderChestCommand implements CommandExecutor {
     /**
      * Executes the given command, returning its success.
      * <br>
@@ -23,7 +23,7 @@ public class CraftCommand implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
-            player.openWorkbench(player.getLocation(),true);
+            player.openInventory(player.getEnderChest());
         }
         return true;
     }
