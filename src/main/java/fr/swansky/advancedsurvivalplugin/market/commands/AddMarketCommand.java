@@ -4,7 +4,6 @@ import fr.swansky.advancedsurvivalplugin.Rank;
 import fr.swansky.advancedsurvivalplugin.market.MarketManager;
 import fr.swansky.advancedsurvivalplugin.market.models.Market;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -46,20 +45,18 @@ public class AddMarketCommand implements CommandExecutor {
                     marketTitle.append(args[i]);
                 }
 
-                Market market = new Market(id,marketTitle.toString(),Integer.parseInt(row));
+                Market market = new Market(id, marketTitle.toString(), Integer.parseInt(row));
                 try {
                     marketController.add(market);
                     marketController.save();
-                    player.sendMessage(ChatColor.GRAY+" Le market "+ChatColor.GREEN+marketTitle.toString()+
-                            ChatColor.GRAY+" avec l'id " +
-                            ChatColor.GREEN+id+
-                            ChatColor.GRAY+" a été crée.");
+                    player.sendMessage(ChatColor.GRAY + " Le market " + ChatColor.GREEN + marketTitle.toString() +
+                            ChatColor.GRAY + " avec l'id " +
+                            ChatColor.GREEN + id +
+                            ChatColor.GRAY + " a été crée.");
                 } catch (Exception e) {
-                    player.sendMessage(ChatColor.RED+"Impossible d'ajouter ce market.");
+                    player.sendMessage(ChatColor.RED + "Impossible d'ajouter ce market.");
                 }
-
             }
-            //TODO add code for add market command
         }
         return true;
     }

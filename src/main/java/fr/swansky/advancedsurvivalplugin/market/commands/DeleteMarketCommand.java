@@ -1,14 +1,27 @@
 package fr.swansky.advancedsurvivalplugin.market.commands;
 
 import fr.swansky.advancedsurvivalplugin.Rank;
+import fr.swansky.advancedsurvivalplugin.market.MarketManager;
+import fr.swansky.advancedsurvivalplugin.market.models.Market;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-public class DeleteMarketCommand implements CommandExecutor {
+import java.util.ArrayList;
+import java.util.List;
+
+public class DeleteMarketCommand implements CommandExecutor, TabCompleter {
+    private final MarketManager marketController;
+
+    public DeleteMarketCommand(MarketManager marketController) {
+        this.marketController = marketController;
+    }
+
     /**
      * Executes the given command, returning its success.
      * <br>
@@ -30,8 +43,38 @@ public class DeleteMarketCommand implements CommandExecutor {
                 player.sendMessage(Rank.NO_PERMISSION_MESSAGE);
                 return true;
             }
+            if (args.length > 0) {
+                String marketID = args[0];
+                if (marketController.existByID(marketID)) {
+                    Market marketByID = marketController.getMarketByID(marketID);
+                    marketController.delete(marketByID);
+                    marketController.save();
+                } else {
+                    player.sendMessage(ChatColor.GRAY + "La market ID n'est pas valide");
+                }
+            } else {
+                player.sendMessage(ChatColor.GRAY + "Aucune market ID n'est precisé");
+            }
             //TODO add code for delete market command
         }
         return true;
+    }
+
+    /**
+     * Requests a list of possible completions for a command argument.
+     *
+     * @param sender  Source of the command.  For players tab-completing a
+     *                command inside of a command block, this will be the player, not
+     *                the command block.
+     * @param command Command which was executed
+     * @param alias   The alias used
+     * @param args    The arguments passed to the command, including final
+     *                partial argument to be completed and command label
+     * @return A List of possible completions for the final argument, or null
+     * to default to the command executor
+     */
+    @Override
+    public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args) {
+        return new ArrayList<>(marketController.getMarketMap().keySet());
     }
 }

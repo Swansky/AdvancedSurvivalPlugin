@@ -12,7 +12,6 @@ import org.bukkit.inventory.ItemStack;
 public class InventoryClickListener implements Listener {
     @EventHandler
     public void onClickInventory(InventoryClickEvent event) {
-        //TODO add code for Inventory click event listener
         if (event.getView().getTopInventory().getHolder() instanceof CustomInventory) {
             event.setCancelled(true);
             if (event.getCurrentItem() != null) {

@@ -29,7 +29,6 @@ public class GiveCustomItemCommand implements CommandExecutor, TabCompleter {
      */
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        //TODO add code for give custom item command
         if (sender instanceof Player) {
             Player player = (Player) sender;
             if (args.length > 0) {
