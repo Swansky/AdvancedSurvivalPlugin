@@ -11,10 +11,10 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
-public class backCommand implements CommandExecutor {
+public class BackCommand implements CommandExecutor {
     private final BackManager backManager;
 
-    public backCommand(BackManager backManager) {
+    public BackCommand(BackManager backManager) {
         this.backManager = backManager;
     }
 

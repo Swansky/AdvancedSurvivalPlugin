@@ -20,6 +20,7 @@ import fr.swansky.advancedsurvivalplugin.market.commands.*;
 import fr.swansky.advancedsurvivalplugin.market.listeners.CustomMarketVillagerClickEvent;
 import fr.swansky.advancedsurvivalplugin.market.listeners.InventoryClickListener;
 import fr.swansky.advancedsurvivalplugin.utilsGameplay.BackManager;
+import fr.swansky.advancedsurvivalplugin.utilsGameplay.commands.BackCommand;
 import fr.swansky.advancedsurvivalplugin.utilsGameplay.commands.CraftCommand;
 import fr.swansky.advancedsurvivalplugin.utilsGameplay.commands.EnderChestCommand;
 import fr.swansky.advancedsurvivalplugin.utilsGameplay.commands.SlimeCommand;
@@ -96,7 +97,7 @@ public final class AdvancedSurvivalPlugin extends JavaPlugin {
         getCommand("craft").setExecutor(new CraftCommand());
         getCommand("ec").setExecutor(new EnderChestCommand());
         getCommand("slime").setExecutor(new SlimeCommand());
-
+        getCommand("back").setExecutor(new BackCommand(backManager));
 
     }
 
