@@ -48,28 +48,32 @@ public class BedrockBreakerItem extends CustomItem {
 
     @Override
     public void leftClick(PlayerEvent playerEvent) {
-        PlayerInteractEvent event = (PlayerInteractEvent) playerEvent;
-        if (event.getClickedBlock() != null) {
-            if (event.getClickedBlock().getType() == Material.BEDROCK) {
-                event.getClickedBlock().breakNaturally();
-                event.getPlayer().playSound(event.getClickedBlock().getLocation(), Sound.ENTITY_WITHER_SHOOT, 1L, 1L);
+
+        if (playerEvent instanceof PlayerInteractEvent) {
+            PlayerInteractEvent event = (PlayerInteractEvent) playerEvent;
+            if (event.getClickedBlock() != null) {
+                if (event.getClickedBlock().getType() == Material.BEDROCK) {
+                    event.getClickedBlock().breakNaturally();
+                    event.getPlayer().playSound(event.getClickedBlock().getLocation(), Sound.ENTITY_WITHER_SHOOT, 1L, 1L);
 
 
-                Damageable itemMeta = (Damageable) event.getItem().getItemMeta();
+                    Damageable itemMeta = (Damageable) event.getItem().getItemMeta();
 
-                if (itemMeta.getDamage() + 10 > event.getItem().getType().getMaxDurability()) {
-                    event.getPlayer().playSound(
-                            event.getPlayer().getLocation(),
-                            Sound.ENTITY_ITEM_BREAK, 1F, 1F);
-                    event.getPlayer().getInventory().removeItemAnySlot(event.getItem());
-                } else {
+                    if (itemMeta.getDamage() + 10 > event.getItem().getType().getMaxDurability()) {
+                        event.getPlayer().playSound(
+                                event.getPlayer().getLocation(),
+                                Sound.ENTITY_ITEM_BREAK, 1F, 1F);
+                        event.getPlayer().getInventory().removeItemAnySlot(event.getItem());
+                    } else {
 
-                    itemMeta.setDamage(itemMeta.getDamage() + 10);
+                        itemMeta.setDamage(itemMeta.getDamage() + 10);
+                    }
+
+                    event.getItem().setItemMeta(itemMeta);
                 }
-
-                event.getItem().setItemMeta(itemMeta);
             }
         }
+
     }
 
     @Override
