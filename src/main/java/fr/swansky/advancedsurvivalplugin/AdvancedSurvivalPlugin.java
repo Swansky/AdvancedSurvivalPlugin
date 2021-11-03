@@ -17,6 +17,9 @@ import fr.swansky.advancedsurvivalplugin.home.commands.SetHomeCommand;
 import fr.swansky.advancedsurvivalplugin.market.MarketManager;
 import fr.swansky.advancedsurvivalplugin.market.commands.*;
 import fr.swansky.advancedsurvivalplugin.market.listeners.InventoryClickListener;
+import fr.swansky.advancedsurvivalplugin.utilsCommands.CraftCommand;
+import fr.swansky.advancedsurvivalplugin.utilsCommands.EnderChestCommand;
+import fr.swansky.advancedsurvivalplugin.utilsCommands.SlimeCommand;
 import org.bukkit.NamespacedKey;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -78,15 +81,13 @@ public final class AdvancedSurvivalPlugin extends JavaPlugin {
         getCommand("home").setExecutor(new HomeCommand(homeManager));
         getCommand("setHome").setExecutor(new SetHomeCommand(homeManager));
 
-      /*
-
-
-
 
         // Utils Commands
         getCommand("craft").setExecutor(new CraftCommand());
         getCommand("ec").setExecutor(new EnderChestCommand());
-        getCommand("slime").setExecutor(new SlimeCommand());*/
+        getCommand("slime").setExecutor(new SlimeCommand());
+
+
     }
 
     private void registerEvents() {

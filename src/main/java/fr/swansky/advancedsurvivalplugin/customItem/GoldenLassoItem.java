@@ -48,9 +48,12 @@ public class GoldenLassoItem extends CustomItem {
                 Entity entitySave = entityMap.get(playerEvent.getPlayer().getUniqueId());
                 if (entitySave != null) {
                     if (!entitySave.isDead() && entitySave.isValid()) {
-                        entitySave.teleport(event.getPlayer().getLocation());
-                        entityMap.remove(event.getPlayer().getUniqueId());
-                        event.getPlayer().sendMessage(ChatColor.GRAY + "Vous venez de teleporter un mob");
+                        if (event.getInteractionPoint() != null) {
+                            entitySave.teleport(event.getInteractionPoint());
+                            entityMap.remove(event.getPlayer().getUniqueId());
+                            event.getPlayer().sendMessage(ChatColor.GRAY + "Vous venez de teleporter un mob");
+
+                        }
                     }
                 }
             } else {

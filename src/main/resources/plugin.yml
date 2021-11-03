@@ -49,5 +49,13 @@ commands:
   delhome:
     description: delete home
     usage: /delhome <home name>
-
+  craft:
+    description: open workbench
+    usage: /craft
+  ec:
+    description: open your enderchest
+    usage: /enderchest
+  slime:
+    description: show if the chunk is a slime chunk
+    usage: /slime
 
