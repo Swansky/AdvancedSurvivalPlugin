@@ -10,6 +10,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class CustomItem extends ItemStack {
@@ -80,8 +81,21 @@ public abstract class CustomItem extends ItemStack {
     private void initDefaultMeta() {
 
         ItemMeta itemMeta = this.getItemMeta();
-        List<Component> lore = itemMeta.lore();
-        lore.add(Component.text("\n" + ChatColor.GRAY + description));
+        List<Component> lore;
+        if (itemMeta.hasLore()) lore = itemMeta.lore();
+        else lore = new ArrayList<>();
+
+        lore.add(Component.text(""));
+
+        if (description.contains("\n")) {
+            String[] split = description.split("\n");
+            for (String s : split) {
+                lore.add(Component.text(ChatColor.GRAY + s));
+            }
+        } else {
+            lore.add(Component.text(ChatColor.GRAY + description));
+        }
+
         itemMeta.lore(lore);
 
         itemMeta.displayName(Component.text(customName));
