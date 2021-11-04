@@ -2,6 +2,7 @@ package fr.swansky.advancedsurvivalplugin.customItem.models;
 
 import fr.swansky.advancedsurvivalplugin.AdvancedSurvivalPlugin;
 import org.bukkit.Material;
+import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -82,11 +83,10 @@ public abstract class CustomItem extends ItemStack {
 
     public abstract void initMetaData();
 
-    public abstract void rightClick(PlayerEvent event);
+    public abstract void rightClick(Event event);
 
-    public abstract void leftClick(PlayerEvent event);
+    public abstract void leftClick(Event event);
 
-    public abstract void middleClick(PlayerEvent event);
 
 
     public String getCustomItemID() {

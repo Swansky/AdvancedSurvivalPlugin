@@ -5,7 +5,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerEvent;
+import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
@@ -31,13 +31,13 @@ public class GoldenLassoItem extends CustomItem {
     }
 
     @Override
-    public void rightClick(PlayerEvent playerEvent) {
+    public void rightClick(Event playerEvent) {
 
         if (playerEvent instanceof PlayerInteractEntityEvent) {
             PlayerInteractEntityEvent event = (PlayerInteractEntityEvent) playerEvent;
             Entity entity = event.getRightClicked();
             if (!(entity instanceof Player)) {
-                entityMap.put(playerEvent.getPlayer().getUniqueId(), entity);
+                entityMap.put(event.getPlayer().getUniqueId(), entity);
                 event.getPlayer().sendMessage(ChatColor.GRAY + "Vous venez de selectionner un mob");
 
             }
@@ -45,7 +45,7 @@ public class GoldenLassoItem extends CustomItem {
         } else if (playerEvent instanceof PlayerInteractEvent) {
             PlayerInteractEvent event = (PlayerInteractEvent) playerEvent;
             if (entityMap.containsKey(event.getPlayer().getUniqueId())) {
-                Entity entitySave = entityMap.get(playerEvent.getPlayer().getUniqueId());
+                Entity entitySave = entityMap.get(event.getPlayer().getUniqueId());
                 if (entitySave != null) {
                     if (!entitySave.isDead() && entitySave.isValid()) {
                         if (event.getInteractionPoint() != null) {
@@ -65,12 +65,9 @@ public class GoldenLassoItem extends CustomItem {
     }
 
     @Override
-    public void leftClick(PlayerEvent playerEvent) {
+    public void leftClick(Event playerEvent) {
 
     }
 
-    @Override
-    public void middleClick(PlayerEvent event) {
 
-    }
 }

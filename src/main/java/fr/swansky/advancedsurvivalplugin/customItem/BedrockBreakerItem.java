@@ -4,6 +4,7 @@ import fr.swansky.advancedsurvivalplugin.customItem.models.CustomItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
@@ -42,12 +43,12 @@ public class BedrockBreakerItem extends CustomItem {
     }
 
     @Override
-    public void rightClick(PlayerEvent event) {
+    public void rightClick(Event event) {
 
     }
 
     @Override
-    public void leftClick(PlayerEvent playerEvent) {
+    public void leftClick(Event playerEvent) {
 
         if (playerEvent instanceof PlayerInteractEvent) {
             PlayerInteractEvent event = (PlayerInteractEvent) playerEvent;
@@ -76,8 +77,4 @@ public class BedrockBreakerItem extends CustomItem {
 
     }
 
-    @Override
-    public void middleClick(PlayerEvent event) {
-
-    }
 }
