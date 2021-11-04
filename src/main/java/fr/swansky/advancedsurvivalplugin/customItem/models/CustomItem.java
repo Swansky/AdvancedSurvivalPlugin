@@ -1,13 +1,16 @@
 package fr.swansky.advancedsurvivalplugin.customItem.models;
 
 import fr.swansky.advancedsurvivalplugin.AdvancedSurvivalPlugin;
+import net.kyori.adventure.text.Component;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.event.Event;
-import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 public abstract class CustomItem extends ItemStack {
     private final String customItemID;
@@ -28,7 +31,7 @@ public abstract class CustomItem extends ItemStack {
         this.customName = customName;
         this.description = description;
         initMetaData();
-        initContainerID();
+        initDefaultMeta();
     }
 
     /**
@@ -49,7 +52,7 @@ public abstract class CustomItem extends ItemStack {
         this.customName = customName;
         this.description = description;
         initMetaData();
-        initContainerID();
+        initDefaultMeta();
     }
 
     /**
@@ -71,12 +74,18 @@ public abstract class CustomItem extends ItemStack {
         this.customName = customName;
         this.description = description;
         initMetaData();
-        initContainerID();
+        initDefaultMeta();
     }
 
-    private void initContainerID() {
+    private void initDefaultMeta() {
 
         ItemMeta itemMeta = this.getItemMeta();
+        List<Component> lore = itemMeta.lore();
+        lore.add(Component.text("\n" + ChatColor.GRAY + description));
+        itemMeta.lore(lore);
+
+        itemMeta.displayName(Component.text(customName));
+
         itemMeta.getPersistentDataContainer().set(AdvancedSurvivalPlugin.NAMESPACE_KEY, PersistentDataType.STRING, this.customItemID);
         setItemMeta(itemMeta);
     }
@@ -86,7 +95,6 @@ public abstract class CustomItem extends ItemStack {
     public abstract void rightClick(Event event);
 
     public abstract void leftClick(Event event);
-
 
 
     public String getCustomItemID() {

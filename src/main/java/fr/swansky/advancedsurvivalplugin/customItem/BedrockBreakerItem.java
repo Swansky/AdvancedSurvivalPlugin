@@ -5,7 +5,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.event.Event;
-import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
@@ -15,7 +14,7 @@ public class BedrockBreakerItem extends CustomItem {
     private static final String customItemID = "BEDROCK_BREAKER";
     private static final String customName = ChatColor.RED + "Bedrock breaker";
     private static final Material material = Material.GOLDEN_PICKAXE;
-    private static final String description = "";
+    private static final String description = "Un outil unique qui permet de casser 3 blocs de bedrock";
 
     public BedrockBreakerItem() {
         super(material, customItemID, customName, description);
@@ -39,7 +38,6 @@ public class BedrockBreakerItem extends CustomItem {
 
     @Override
     public void initMetaData() {
-
     }
 
     @Override

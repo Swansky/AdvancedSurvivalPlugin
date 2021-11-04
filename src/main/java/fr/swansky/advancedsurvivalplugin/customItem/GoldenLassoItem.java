@@ -16,9 +16,9 @@ import java.util.UUID;
 public class GoldenLassoItem extends CustomItem {
 
     private static final String customItemID = "GOLDEN_LASSO";
-    private static final String customName = ChatColor.RED + "Golden lasso";
+    private static final String customName = ChatColor.GOLD + "Golden lasso";
     private static final Material material = Material.LEAD;
-    private static final String description = "";
+    private static final String description = "Ce lasso magique permet de teleporter un mob";
     private final Map<UUID, Entity> entityMap = new HashMap<>();
 
     public GoldenLassoItem() {

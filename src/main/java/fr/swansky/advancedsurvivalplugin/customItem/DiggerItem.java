@@ -5,19 +5,21 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.Event;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DiggerItem extends CustomItem {
-    private static final String customItemID = "BEDROCK_BREAKER";
-    private static final String customName = ChatColor.RED + "Bedrock breaker";
-    private static final Material material = Material.GOLDEN_PICKAXE;
-    private static final String description = "";
+    private static final String customItemID = "DIGGER";
+    private static final String customName = ChatColor.RED + "Master Digger";
+    private static final Material material = Material.IRON_PICKAXE;
+    private static final String description = "Cette pioche est capable de creuser 3x3 ! \nIl est possible de s'accroupir pour désactiver son pouvoir";
 
     public DiggerItem() {
         super(new ItemStack(material), customItemID, customName, description);
@@ -25,7 +27,10 @@ public class DiggerItem extends CustomItem {
 
     @Override
     public void initMetaData() {
-
+        ItemMeta itemMeta = this.getItemMeta();
+        itemMeta.addEnchant(Enchantment.DIG_SPEED, 6, true);
+        itemMeta.addEnchant(Enchantment.DURABILITY, 5, true);
+        this.setItemMeta(itemMeta);
     }
 
     @Override
