@@ -3,10 +3,11 @@ package fr.swansky.advancedsurvivalplugin.customItem.listeners;
 import fr.swansky.advancedsurvivalplugin.AdvancedSurvivalPlugin;
 import fr.swansky.advancedsurvivalplugin.customItem.CustomItemManager;
 import fr.swansky.advancedsurvivalplugin.customItem.models.CustomItem;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.player.PlayerEvent;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
@@ -34,7 +35,7 @@ public class ClickCustomItemListener implements Listener {
     }
 
 
-    private void transfer(ItemStack item, PlayerEvent event, Action action) {
+    private void transfer(ItemStack item, Event event, Action action) {
         if (item != null) {
             ItemMeta itemMeta = item.getItemMeta();
             if (itemMeta != null) {
@@ -53,6 +54,12 @@ public class ClickCustomItemListener implements Listener {
 
             }
         }
+    }
+
+    @EventHandler
+    private void breakBLockEvent(BlockBreakEvent event) {
+        ItemStack itemInMainHand = event.getPlayer().getInventory().getItemInMainHand();
+        transfer(itemInMainHand, event, Action.LEFT_CLICK_BLOCK);
     }
 
 }
